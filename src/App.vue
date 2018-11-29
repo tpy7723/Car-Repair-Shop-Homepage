@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <router-view/>
+    <navigation></navigation>
+    <app-nav></app-nav>  <!--네비게이션의 템플릿(nav)가 들어온다.-->
+    <router-view></router-view>
   </div>
 </template>
 
