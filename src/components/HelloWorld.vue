@@ -2,8 +2,10 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
-    <h1>팡석</h1>
-    <router-link to="/login">로그인</router-link>
+    <h1>팡석</h1><br/>
+    <router-link to="/login">로그인</router-link><br/>
+    <router-link to="/question">질문게시판</router-link><br/>
+    <router-link to="/review">후기게시판</router-link><br/>
 
   </div>
 </template>

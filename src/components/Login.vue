@@ -1,5 +1,5 @@
 <template>
   <div class="login">
-    f로그인
+    로그인
   </div>
 </template>
