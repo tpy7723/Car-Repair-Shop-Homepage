@@ -3,6 +3,7 @@
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <ul>
+    팡석
       <li>
         <a
           href="https://vuejs.org"
