@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <body>
-      <!--<img src="./assets/logo.png">-->
+      <p><img src="./car.png" width="50px" height="50px" ><p/>
       <div class = "main">
         <h1>팡석</h1><br/>
         <router-link to="/question">질문게시판</router-link><br/>
@@ -38,11 +38,16 @@ li {
 a {
   color: #42b983;
 }
+img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 .main{
-  float : right;
   width: 100%;
   padding-top: 50px;
-  padding-left: 300px;
-  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  text-align : center;
 }
 </style>
