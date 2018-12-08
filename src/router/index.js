@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Login from '@/components/Login'
 import Question from '@/components/Question'
 import Review from '@/components/Review'
+import Reservation from '@/components/Reservation'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path:'/review',
       name:'Review',
       component: Review
+    },
+    {
+      path:'/reservation',
+      name:'Reservation',
+      component: Reservation
     }
   ]
 })

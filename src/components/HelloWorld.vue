@@ -1,11 +1,9 @@
 <template>
   <div class="hello">
     <body>
-      <p><img src="./car.png" width="50px" height="50px" ><p/>
       <div class = "main">
+        <p><img src="./car.png" width="50px" height="50px" ><p/>
         <h1>팡석</h1><br/>
-        <router-link to="/question">질문게시판</router-link><br/>
-        <router-link to="/review">후기게시판</router-link><br/>
       </div>
     </body>
   </div>
@@ -45,7 +43,7 @@ img{
 }
 .main{
   width: 100%;
-  padding-top: 50px;
+  padding-top: 100px;
   margin-left: auto;
   margin-right: auto;
   text-align : center;

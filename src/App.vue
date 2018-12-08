@@ -4,13 +4,22 @@
     <app-nav></app-nav>  <!--네비게이션의 템플릿(nav)가 들어온다.-->
     <router-view></router-view>
     <app-header class = "header">
-        <div class="navigate_header">
-          <button type="button" class="btn btn-sm" style="float: right;" >
-            <router-link to="/login">로그인</router-link>
-          </button>
-        </div>
+      <button type="button" class="btn btn-outline-primary btn-sm" style="float:right; padding:1px;">
+        <router-link to="/login">로그인</router-link>
+      </button>
+        <br/>
+          <ul class="nav justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link active"><router-link to="/reservation">예약하기</router-link></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"><router-link to="/question">질문게시판</router-link></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link"><router-link to="/review">후기게시판</router-link></a>
+            </li>
+          </ul>
     </app-header>
-
     <div class="footer">
       연락처 : 010-8763-8915<br/>
       Made by 권정훈, 박광석 최유진<br/>
@@ -42,10 +51,8 @@ export default {
   color: balck;
   text-align: center;
   border-bottom-style: solid;
-  border-bottom-color: prime;
   border-bottom-width: 1px;
   margin-bottom: 50px;
-  padding : 3px;
   margin-top: 3px;
 }
 .footer {
@@ -57,5 +64,8 @@ export default {
   color : white;
   text-align: center;
   margin-top: 30px;
+}
+.nav-itme{
+  color: #42b983;
 }
 </style>

@@ -5,9 +5,10 @@
 </template>
 <style media="screen">
 .question{
-  float : right;
-  padding-top: 50px;
-  margin : 10px;
-  text-align: center;
+  width: 100%;
+  padding-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align : center;
 }
 </style>

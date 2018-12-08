@@ -5,10 +5,10 @@
 </template>
 <style media="screen">
 .review{
-  float : right;
   width: 100%;
-  padding-top: 50px;
-  padding-left: 300px;
-  box-sizing: border-box;
+  padding-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align : center;
 }
 </style>
