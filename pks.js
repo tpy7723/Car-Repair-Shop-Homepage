@@ -1,4 +1,4 @@
-var http= require('http');
+var http = require('http');
 var express = require('express');
 var mysql = require('mysql');
 var dbconfig = require('./database.js');
@@ -17,70 +17,69 @@ app.use(cors());
 
 const router = express.Router();
 
-router.post('/call/review', (req, res, next)=>{
+router.post('/call/review', (req, res, next) => {
   console.log('in call/review')
-  con.query('SELECT * from 후기', (e, r, f)=>{
-      if(e){
-          res.send({
-              status: 'error',
-              errMsg: '에러.'
-          })
-      }
-      else {
-          res.send({
-              status: 'success',
-              data: r
-          })
-      }
+  con.query('SELECT * from 후기', (e, r, f) => {
+    if (e) {
+      res.send({
+        status: 'error',
+        errMsg: '에러.'
+      })
+    } else {
+      res.send({
+        status: 'success',
+        data: r
+      })
+    }
   })
 })
-app.get('/', function(req, res){
+app.get('/', function(req, res) {
   res.send('Root2');
   res.send('Rooat2');
 });
-app.get('/login', function(req, res){
+app.get('/login', function(req, res) {
   res.send('Root');
 });
-app.get('/calsdl/review', function(req, res){ //게시판 띄우기
+app.get('/calsdl/review', function(req, res) { //게시판 띄우기
   res.send('Root');
 });
-app.get('/request/review', function(req, res){ //게시글 등록
+app.get('/request/review', function(req, res) { //게시글 등록
   res.send('Root');
 });
-app.get('/call/question', function(req, res){
+app.get('/call/question', function(req, res) {
   console.log('in call/question')
-//  res.send('hell0');
+  //  res.send('hell0');
 
-  connection.query('SELECT * from 질문게시판',(e,r,f)=>{
-	res.setHeader('Content-Type', 'text/plain');
-	if(e){
-		console.log(e)
-		res.send({
-			status:'error',
-			errMsg:'에러',
-		})
-	}
-	else{
-		res.send({
-			status: 'success',
-			result: JSON.parse(JSON.stringify(r)),
-      fields: f
-		})
-	}
+  connection.query('SELECT * from 질문게시판', (e, r, f) => {
+    res.setHeader('Content-Type', 'text/plain');
+    if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      res.send({
+        status: 'success',
+        result: JSON.parse(JSON.stringify(r)),
+        fields: f
+      })
+    }
   })
+});
 
-});
-app.get('/request/question', function(req, res){ //등록
+app.get('/request/question', function(req, res) { //등록
   res.send('Root');
 });
-app.get('/call/reservation', function(req, res){
+app.get('/call/reservation', function(req, res) {
   res.send('Root');
 });
-app.get('/request/reservation', function(req, res){
+app.get('/request/reservation', function(req, res) {
   res.send('Root');
 });
 // configuration ===============================================================
-app.set('port', process.env.PORT || 3000); app.listen(app.get('port'),
-function () {
-  console.log('Express server listening on port ' + app.get('port'));
-});
+app.set('port', process.env.PORT || 3000);
+app.listen(app.get('port'),
+  function() {
+    console.log('Express server listening on port ' + app.get('port'));
+  });
