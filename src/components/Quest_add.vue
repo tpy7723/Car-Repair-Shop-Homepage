@@ -1,17 +1,22 @@
 <template>
 <div class="quest_add">
+  질문등록
   <div>
     <div class="board-box container">
-      <button type="button" class="btn btn-outline-primary" style="float:right" @click.prevent="submitLog">{{mode=='create'?'등록':'수정'}}</button>
-      <button type="button" class="btn btn-outline-secondary" style="float:right" @click="$router.go(-1)">뒤로가기</button>
+      <button type="button" class="btn btn-outline-primary" style="float:right" @click.prevent="submitLog">등록</button>
+      <button type="button" class="btn btn-outline-primary" style="float:right" @click.prevent="goBack">뒤로가기</button>
+      <br>
+      <br>
       <form>
         <div class="form-group">
-          <input type="file" ref="file" id="files" class="form-control-file" @change="fileChanges">
+          <label for="exampleFormControlTextarea1">내용</label>
+          <textarea class="form-control" id="text_" rows="10"></textarea>
+
         </div>
       </form>
       <form>
         <div class="form-group">
-          <wysiwyg v-model="content"/>
+          <wysiwyg v-model="content" />
         </div>
       </form>
     </div>
@@ -21,50 +26,79 @@
 
 <script>
 export default {
-  name:"addquestion",
-  data(){
-    return{
-        내용:'',
-        고객ID:'fjasl'
+  name: "quest_add",
+  data() {
+    return {
+      text_: '',
+      //ID: this.$store.getters.getId
+      ID:'hjchoi'
     }
   },
-  methods:{
-        submitLog: function(){
-          if(this.mode == 'create'){
-            var url = this.$config.targetURL+'/resources/mlog/';
+  methods: {
+    /*
+    submitLog: function() {
+      if (this.mode == 'create') {
+        var url = this.$config.targetURL + '/resources/mlog/';
 
-            var json = {
-              content: this.content,
-              writerID: this.getId
-            }
-            console.log(this.boardId)
-            var formData = new FormData()
-            formData.append('information', JSON.stringify(json))
-            formData.append('userfile', this.file1)
-
-            this.$http.post(url, formData)
-            .then(result=>{
-              console.log('success!')
-              this.$notice({
-                type: 'success',
-                text: '글 등록이 성공적으로 완료되었습니다.'
-              })
-              this.$router.go(-1)
-            })
-            .catch(error=>{
-                console.log('서버에러')
-                this.$router.push({
-                  name: 'Board'
-                })
-              })
-          }
-        },
-        goBack: function(){
-          this.$router.push({
-            name: "Question"
-          })
+        var json = {
+          content: this.content,
+          writerID: this.getId
         }
+        console.log(this.boardId)
+        var formData = new FormData()
+        formData.append('information', JSON.stringify(json))
+        formData.append('userfile', this.file1)
+
+        this.$http.post(url, formData)
+          .then(result => {
+            console.log('success!')
+            this.$notice({
+              type: 'success',
+              text: '글 등록이 성공적으로 완료되었습니다.'
+            })
+            this.$router.go(-1)
+          })
+          .catch(error => {
+            console.log('서버에러')
+            this.$router.push({
+              name: 'Board'
+            })
+          })
+      }
+    },
+    */
+    goBack: function() {
+      this.$router.push("question")
+      //this.$router.push({
+      //  name: "Question"
+    },
+    submitLog: function() {
+      console.log(text_.value)
+      var url = 'http://106.10.32.228:3000' + `/request/question?질문내용=${text_.value}&ID=${this.ID}`;
+
+      console.log(url)
+      this.$http.get(url)
+        .then((result) => {
+          if (result.data.status == 'success') {
+            console.log('success')
+            this.$router.push("question")
+          } else {
+            console.log('error')
+
+          }
+
+        })
+        .catch((error) => {
+          console.log('server error')
+          console.log(error)
+          this.$notice({
+            type: 'alert',
+            text: '서버에 오류가 있습니다.'
+          })
+        })
+    }
   }
+
 }
 </script>
 

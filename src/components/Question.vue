@@ -72,10 +72,10 @@
 
       },
       createLog: function() {
-            this.$router.push("Question.vue")
+            this.$router.push("quest_add")
       }
       }
-      }
+
     }
 
   </script>
