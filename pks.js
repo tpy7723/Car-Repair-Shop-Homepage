@@ -213,7 +213,7 @@ app.get('/call/reservation', function(req, res) {
   //  res.send('hell0');
   console.log(req.query);
   var id = req.query.ID;
-  connection.query('SELECT * from 예약게시판 where', (e, r, f) => {
+  connection.query('SELECT * from 예약게시판 where ID=?', (e, r, f) => {
     res.setHeader('Content-Type', 'text/plain');
     if (e) {
       console.log(e)

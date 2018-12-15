@@ -21,7 +21,6 @@
         </thead>
         <tbody>
           <tr v-for="(item, index) in list" @click="readBoard(item)" :key="index" style="cursor: pointer">
-            <td scope="col">{{index+1}}</td>
             <td>{{item.질문번호}}</td>
             <td>{{item.내용}}</td>
             <td>{{item.작성시간}}</td>
@@ -56,7 +55,7 @@
           .then(result => {
             console.log(result)
             console.log(result.data.status)
-            this.list = JSON.parse(result.data.result)
+            this.list = result.data.result
             console.log(this.list)
             this.list.forEach(v => {
               var datainfo = v.writetime
