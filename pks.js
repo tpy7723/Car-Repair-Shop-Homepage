@@ -55,27 +55,6 @@ app.get('/login_em', function(req, res) {
 })
 });
 
-/*
-router.post('/call/review', (req, res, next) => {
-  console.log('in call/review')
-  con.query('SELECT * from 후기', (e, r, f) => {
-    if (e) {
-      console.log(e);
-      res.send({
-        status: 'error',
-        errMsg: '에러.'
-      })
-    } else {
-      console.log(r)
-      res.send({
-        status: 'success',
-        data: r
-      })
-    }
-  })
-});
-*/
-
 app.get('/', function(req, res) {
   res.send('Root');
 });
@@ -116,26 +95,6 @@ app.get('/login', function(req, res) {
 	}
 })
 });
-/*
-router.post('/call/review', (req, res, next) => {
-  console.log('in call/review')
-  con.query('SELECT * from 후기', (e, r, f) => {
-    if (e) {
-      console.log(e);
-      res.send({
-        status: 'error',
-        errMsg: '에러.'
-      })
-    } else {
-      console.log(r)
-      res.send({
-        status: 'success',
-        result: JSON.parse(JSON.stringify(r))
-      })
-    }
-  })
-})
-*/
 app.get('/call/review', function(req, res) {
    console.log('in call/review')
    connection.query('SELECT * from 후기', (e, r, f) => {
@@ -159,7 +118,26 @@ app.get('/call/review', function(req, res) {
 });
 
 app.get('/request/review', function(req, res) { //게시글 등록
-  res.send('Root');
+   var newDate = new Date(); // 현재 시각 받아옴
+   var time = newDate.toFormat('YYYY-MM-DD HH24:MI:SS');
+   console.log(req.query);
+   var context = req.query.내용,
+       id = req.query.ID;
+       num = req.query.접수번호;
+   connection.query('insert into 후기 values (?,?,?,?)',[context,time,num,id],(e,r,f) =>{
+        res.setHeader('Content-Type', 'text/plain');
+            if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      res.send({
+        status: 'success'
+      })
+   }
+  })
 });
 
 
@@ -213,7 +191,7 @@ app.get('/call/reservation', function(req, res) {
   //  res.send('hell0');
   console.log(req.query);
   var id = req.query.ID;
-  connection.query('SELECT * from 예약게시판 where ID=?', (e, r, f) => {
+  connection.query('SELECT * from 예약게시판 where ID=?',[id],(e, r, f) => {
     res.setHeader('Content-Type', 'text/plain');
     if (e) {
       console.log(e)

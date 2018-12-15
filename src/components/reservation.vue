@@ -46,6 +46,7 @@ export default {
   mounted: function() {
     this.msg = ''
     console.log('예약게시판')
+    this.getID()
     this.getData()
   },
   computed: {
@@ -86,34 +87,13 @@ export default {
           })
       },
       submit: function(){
-        var url =  'http://106.10.32.228:3000/reservation';
-          this.$http.get(url+`?id=${this.id}&password=${this.password}`)
-          .then((result)=>{
-              if(result.data.status == 'success'){ // 로그인 성공
-                  console.log('success')
-                  var data = {id:result.data.result.ID,
-                    password:result.data.result.비밀번호}
-                  this.logIn(result.data)
-                  this.$router.push("/")
-              }
-              else if(result.data.status == 'no-user'){
-                console.log("no user")
-                alert('존재하지 않는 사용자입니다.')
-              }
-              else {
-                console.log('error')
-              }
-            })
-          .catch((error)=>{
-            console.log('server success')
-            this.$notice({
-                type: 'alert',
-                text: '서버에 오류가 있습니다.'
-            })
-          })
+        this.$router.push("reserve_add")
       },
       goBack: function(){
         this.$router.push("/")
+      },
+      createLog: function(){
+        this.$router.push("reserv_add")
       }
   }
 }
