@@ -21,19 +21,12 @@
 
 <script>
 export default {
-  name:"addquestion"
+  name:"addquestion",
   data(){
-    retrun{
-        내용:''
+    return{
+        내용:'',
         고객ID:'fjasl'
-
     }
-  },
-  computed:{
-
-  },
-  mounted:function{
-
   },
   methods:{
         submitLog: function(){
@@ -64,7 +57,8 @@ export default {
                   name: 'Board'
                 })
               })
-          },
+          }
+        },
         goBack: function(){
           this.$router.push({
             name: "Question"

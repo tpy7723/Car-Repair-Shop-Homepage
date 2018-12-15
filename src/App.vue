@@ -7,6 +7,9 @@
       <button type="button" class="btn btn-outline-primary btn-sm" style="float:right; padding:1px;">
         <router-link to="/login">로그인</router-link>
       </button>
+      <button type="button" class="btn btn-outline-primary btn-sm" style="float:right; padding:1px;">
+        <router-link to="/login_em">직원</router-link>
+      </button>
         <br/>
           <ul class="nav justify-content-center">
             <li class="nav-item">
