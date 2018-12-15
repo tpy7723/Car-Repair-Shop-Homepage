@@ -35,38 +35,6 @@ export default {
     }
   },
   methods: {
-    /*
-    submitLog: function() {
-      if (this.mode == 'create') {
-        var url = this.$config.targetURL + '/resources/mlog/';
-
-        var json = {
-          content: this.content,
-          writerID: this.getId
-        }
-        console.log(this.boardId)
-        var formData = new FormData()
-        formData.append('information', JSON.stringify(json))
-        formData.append('userfile', this.file1)
-
-        this.$http.post(url, formData)
-          .then(result => {
-            console.log('success!')
-            this.$notice({
-              type: 'success',
-              text: '글 등록이 성공적으로 완료되었습니다.'
-            })
-            this.$router.go(-1)
-          })
-          .catch(error => {
-            console.log('서버에러')
-            this.$router.push({
-              name: 'Board'
-            })
-          })
-      }
-    },
-    */
     goBack: function() {
       this.$router.push("question")
       //this.$router.push({

@@ -69,7 +69,7 @@
           })
       },
       createLog: function() {
-            this.$router.push("quest_add")
+            this.$router.push("review_add")
       }
     }
   }
