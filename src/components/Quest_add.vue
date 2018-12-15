@@ -48,9 +48,7 @@ export default {
       this.$router.push("question")
     },
     submitLog: function() {
-      console.log(this.ID)
       var url = 'http://106.10.32.228:3000' + `/request/question?질문내용=${text_.value}&ID=${this.ID}`;
-
       console.log(url)
       this.$http.get(url)
         .then((result) => {
