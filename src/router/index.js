@@ -5,6 +5,7 @@ import Login from '@/components/Login'
 import Question from '@/components/Question'
 import Review from '@/components/Review'
 import Reservation from '@/components/Reservation'
+import Quest_add from '@/components/Quest_add'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path:'/reservation',
       name:'Reservation',
       component: Reservation
+    },
+    {
+      path:'/quest_add',
+      name:'Quest_add',
+      component: Quest_add
     }
   ]
 })
