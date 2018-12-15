@@ -1,5 +1,5 @@
 <template>
-<div class="quest_add">
+<div class="review_add">
   후기등록
   <div>
     <div class="board-box container">
@@ -84,7 +84,7 @@ export default {
 </script>
 
 <style media="screen">
-.quest_add {
+.review_add {
   width: 100%;
   padding-top: 10px;
   margin-left: auto;

@@ -170,8 +170,8 @@ app.get('/request/question', function(req, res) { //등록
    console.log(req.query);
    var context = req.query.질문내용,
        id = req.query.ID;
-   var 질문번호 = '90000'
-   connection.query('insert into 질문게시판 values (?,?,?,?)',[질문번호,context,time,id],(e,r,f) =>{
+   connection.query('insert into 질문게시판 values (0,?,?,?)',[context,time,id],(e,r,f) =>{
+   console.log(connection.query);
 	res.setHeader('Content-Type', 'text/plain');
 	    if (e) {
       console.log(e)
@@ -216,6 +216,29 @@ app.get('/call/reservation', function(req, res) {
       }
     }
   })
+});
+
+app.get('/log', function(req, res) {
+   console.log('in log')
+   console.log(req.query);
+   var id_log = req.query.ID;
+   connection.query('SELECT * from 수리기록 WHERE ID = ?',id_log, (e, r, f) => {
+   res.setHeader('Content-Type', 'text/plain');
+   if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      console.log(r)
+      res.send({
+        status: 'success',
+        result: JSON.parse(JSON.stringify(r)),
+        fields: f
+      })
+    }
+ })
 });
 
 app.get('/request/reservation', function(req, res) {

@@ -1,13 +1,25 @@
 <template>
-<div class="quest_add">
-  예약신청
-  <select name='날짜'>
+  <body>
+  <div class="reserv_add">
+    <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Dropdown button
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" href="#">Action</a>
+      <a class="dropdown-item" href="#">Another action</a>
+      <a class="dropdown-item" href="#">Something else here</a>
+    </div>
+  </div>
+  <br/>
+  <select name='fruits'>
     <option value='' selected>-- 선택 --</option>
-    <option value=''>사과</option>
+    <option value='http://www.naver.com'>사과</option>
     <option value='banana'>바나나</option>
     <option value='lemon'>레몬</option>
   </select>
 </div>
+</body>
 </template>
 
 <script>
@@ -15,7 +27,7 @@ export default {
   name: "reservation_add",
   data() {
     return {
-      id: '',
+      id: this.$store.getters.getId,
       date:'',
       month:'',
       year:'',
@@ -24,14 +36,7 @@ export default {
   },
   mounted: function() {
     console.log('예약신청게시판')
-    this.getID()
     this.getDate()
-  },
-  computed: {
-    getID () {
-      this.id = this.$store.getters.getId
-      return this.$store.getters.getId
-    }
   },
   methods: {
     goBack: function() {
@@ -41,7 +46,6 @@ export default {
       this.today = new Date();
     },
     submitLog: function() {
-      console.log(text_.value)
       var reserv_date = this.year+'-'+this.month+'-'+this.date
       var url = 'http://106.10.32.228:3000' + `/request/reservation?id=${this.id}&date=${this.reserv_date}`;
 
@@ -70,9 +74,9 @@ export default {
 </script>
 
 <style media="screen">
-.quest_add {
+.reserv_add {
   width: 100%;
-  padding-top: 10px;
+  padding-top: 20px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;

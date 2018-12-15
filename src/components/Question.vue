@@ -59,8 +59,8 @@
             this.list = result.data.result
             console.log(this.list)
             this.list.forEach(v => {
-              var datainfo = v.writetime
-              v.writetime = this.$moment(dateinfo).tz('Asia/Seoul').format('YYYY년 M월 D일 H시 m분')
+              var datainfo = v.작성시간
+              v.작성시간 = this.$moment(dateinfo).tz('Asia/Seoul').format('YYYY년 M월 D일 H시 m분')
             })
           })
           .catch(error => {
