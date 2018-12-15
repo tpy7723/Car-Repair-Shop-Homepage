@@ -32,13 +32,15 @@ export default {
     this.getID()
     this.getDate()
   },
-  methods: {
-    goBack: function() {
-      this.$router.push("reservation")
-    },
+  computed: {
     getID () {
       this.id = this.$store.getters.getId
       return this.$store.getters.getId
+    }
+  },
+  methods: {
+    goBack: function() {
+      this.$router.push("reservation")
     },
     getDate(){
       this.today = new Date();

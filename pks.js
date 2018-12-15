@@ -186,29 +186,38 @@ app.get('/request/question', function(req, res) { //등록
    }
   })
 });
+
 app.get('/call/reservation', function(req, res) {
   console.log('in call/reservation')
-  //  res.send('hell0');
   console.log(req.query);
-  var id = req.query.ID;
-  connection.query('SELECT * from 예약게시판 where ID=?',[id],(e, r, f) => {
+  var id_reserv = req.query.ID;
+  connection.query('SELECT * FROM 예약 WHERE ID=?',id_reserv,(e, r, f) => {
     res.setHeader('Content-Type', 'text/plain');
     if (e) {
-      console.log(e)
+      console.log('에러'+e)
       res.send({
         status: 'error',
-        errMsg: '에러',
+        errMsg: '에러'
       })
     } else {
       console.log(r)
-      res.send({
-        status: 'success',
-        result: JSON.parse(JSON.stringify(r)),
-        fields: f
-      })
+      if(r[0].ID != id_reserv){
+        res.send({
+          status:'success',
+          Msg:'no-result'
+        })
+      }
+      else{
+        res.send({
+          status: 'success',
+          result: JSON.parse(JSON.stringify(r)),
+          Msg: 'yes'
+        })
+      }
     }
   })
 });
+
 app.get('/request/reservation', function(req, res) {
   res.send('Root');
 });

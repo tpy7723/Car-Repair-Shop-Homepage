@@ -8,27 +8,29 @@
           <button v-show="isLogged" type="button" class="btn btn-secondary" @click="createLog()">예약</button>
         </div>
       </div>
-      <div class="row">
+      <div v-if="sql-r==='success'"class="row">
         <!-- print meeting log list -->
         <table class="table table-striped">
           <thead>
             <tr class="text-center">
-              <th class="text-center">예약날짜</th>
-              <th class="text-center">내용</th>
-              <th class="text-center">작성시간</th>
-              <th class="text-center">고객ID</th>
+              <th class="text-center">#</th>
+              <th class="text-center">예약승인</th>
+              <th class="text-center">픽업장소</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(item, index) in list" @click="readBoard(item)" :key="index" style="cursor: pointer">
               <td scope="col">{{index+1}}</td>
-              <td>{{item.질문번호}}</td>
-              <td>{{item.내용}}</td>
-              <td>{{item.작성시간}}</td>
-              <td>{{item.ID}}</td>
+              <td>{{item.예약승인}}</td>
+              <td>{{item.픽업장소}}</td>
             </tr>
           </tbody>
         </table>
+      </div>
+      <div v-else>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+          <strong>고객님의 예약 기록이 없습니다.</strong>
+        </div>
       </div>
     </div>
   </div>
@@ -38,26 +40,26 @@ export default {
   name: 'Login',
   data () {
     return {
+      list: [],
       msg: 'Welcome to Your Vue.js App',
-      id: '',
-      password: ''
+      id: this.$store.getters.getId,
+      sql_r: 'success'
+
     }
   },
   mounted: function() {
     this.msg = ''
     console.log('예약게시판')
-    this.getID()
     this.getData()
   },
   computed: {
-    isLogged () {
-      console.log(this.$store.getters.isLogged)
-      return this.$store.getters.isLogged
-    },
-    getID () {
-      this.id = this.$store.getters.getId
-      return this.$store.getters.getId
-    }
+      isLogged () {
+        console.log(this.$store.getters.isLogged)
+        return this.$store.getters.isLogged
+      },
+      getId () {
+        return this.$store.getters.getId
+      }
   },
   methods: {
       logIn(data){
@@ -67,19 +69,24 @@ export default {
               authLevel: '1'
           })
       },
-      getDate: function(){
+      getData: function(){
         var url = 'http://106.10.32.228:3000/call/reservation'
         console.log(url)
-        this.$http.get(url+`?id=${this.id}`)
+        this.$http.get(url+`?ID=${this.id}`)
           .then(result => {
             console.log(result)
             console.log(result.data.status)
-            this.list = JSON.parse(result.data.result)
-            console.log(this.list)
-            this.list.forEach(v => {
-              var datainfo = v.희망날짜
-              v.희망날짜 = this.$moment(dateinfo).tz('Asia/Seoul').format('YYYY년 M월 D일 H시 m분')
-            })
+            if(result.data.Msg=='no-result'){
+                this.sql_r='fail'
+            }
+            else{
+              this.list = result.data.result
+              console.log(this.list)
+              this.list.forEach(v => {
+                var datainfo = v.희망날짜
+                v.희망날짜 = this.$moment(dateinfo).tz('Asia/Seoul').format('YYYY년 M월 D일 H시 m분')
+              })
+            }
           })
           .catch(error => {
             console.log('서버에러')

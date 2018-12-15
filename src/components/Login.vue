@@ -58,8 +58,7 @@ export default {
           .then((result)=>{
               if(result.data.status == 'success'){ // 로그인 성공
                   console.log('success')
-                  var data = {id:result.data.result.ID,
-                    password:result.data.result.비밀번호}
+                  var data = {id:result.data.result.ID}
                   this.logIn(result.data)
                   this.$router.push("/")
               }
