@@ -9,6 +9,8 @@ import Quest_add from '@/components/Quest_add'
 import Login_em from '@/components/Login_em'
 import Review_add from '@/components/Review_add'
 import Reserv_add from '@/components/Reserv_add'
+import Join from '@/components/Join'
+import Join_em from '@/components/Join_em'
 
 Vue.use(Router)
 
@@ -52,9 +54,13 @@ export default new Router({
       name:'Review_add',
       component: Review_add
     },{
-      path:'/reserv_add',
-      name:'Reserv_add',
-      component: Reserv_add
+      path:'/join',
+      name:'Join',
+      component: Join
+    },{
+      path:'/join_em',
+      name:'Join_em',
+      component: Join_em
     }
   ]
 })

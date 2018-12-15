@@ -8,13 +8,14 @@
           <button v-show="isLogged" type="button" class="btn btn-secondary" @click="createLog()">예약</button>
         </div>
       </div>
-      <div v-if="sql-r==='success'"class="row">
+      <div v-if="sql_r==='success'" class="row">
         <!-- print meeting log list -->
         <table class="table table-striped">
           <thead>
             <tr class="text-center">
               <th class="text-center">#</th>
               <th class="text-center">예약승인</th>
+              <th class="text-center">희망날짜</th>
               <th class="text-center">픽업장소</th>
             </tr>
           </thead>
@@ -22,6 +23,7 @@
             <tr v-for="(item, index) in list" @click="readBoard(item)" :key="index" style="cursor: pointer">
               <td scope="col">{{index+1}}</td>
               <td>{{item.예약승인}}</td>
+              <td>{{item.희망날짜}}</td>
               <td>{{item.픽업장소}}</td>
             </tr>
           </tbody>
@@ -76,12 +78,14 @@ export default {
           .then(result => {
             console.log(result)
             console.log(result.data.status)
-            if(result.data.Msg=='no-result'){
+            console.log(result.data.Msg)
+            if(result.data.Msg==='no-result'){
+                console.log('no result')
                 this.sql_r='fail'
             }
             else{
               this.list = result.data.result
-              console.log(this.list)
+              console.log('결과'+this.list)
               this.list.forEach(v => {
                 var datainfo = v.희망날짜
                 v.희망날짜 = this.$moment(dateinfo).tz('Asia/Seoul').format('YYYY년 M월 D일 H시 m분')

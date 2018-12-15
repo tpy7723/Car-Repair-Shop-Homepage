@@ -1,17 +1,12 @@
 <template>
 <div class="quest_add">
   예약신청
-  <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button"
-     id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Dropdown button
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" href="#">Action</a>
-      <a class="dropdown-item" href="#">Another action</a>
-      <a class="dropdown-item" href="#">Something else here</a>
-    </div>
-  </div>
+  <select name='날짜'>
+    <option value='' selected>-- 선택 --</option>
+    <option value=''>사과</option>
+    <option value='banana'>바나나</option>
+    <option value='lemon'>레몬</option>
+  </select>
 </div>
 </template>
 
