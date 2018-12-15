@@ -22,17 +22,17 @@
         <tbody>
           <tr v-for="(item, index) in list" @click="readBoard(item)" :key="index" style="cursor: pointer">
             <td scope="col">{{index+1}}</td>
-            <td>{{item.ID}}</td>
-            <td>{{item.접수번호}}</td>
+            <td>{{item.질문번호}}</td>
             <td>{{item.내용}}</td>
             <td>{{item.작성시간}}</td>
+            <td>{{item.ID}}</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 </div>
-
+</template>
 
 <script>
   export default {
@@ -50,9 +50,9 @@
     },
     methods: {
       getData: function() {
-        var url = this.$config.targetURL + '/call/question'
+        var url = 'http://106.10.32.228:3000/call/question'
         console.log(url)
-        this.$http.get(rul)
+        this.$http.get(url)
           .then(result => {
             console.log(result)
             console.log(result.data.status)
@@ -64,11 +64,13 @@
           })
           .catch(error => {
             console.log('서버에러')
+            console.log(error)
           })
       }
     }
   }
-</template>
+  </script>
+
 
 
 
