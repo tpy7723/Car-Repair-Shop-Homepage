@@ -47,6 +47,7 @@
       console.log('질문게시판')
       this.getData()
     },
+
     methods: {
       getData: function() {
         var url = 'http://106.10.32.228:3000/call/question'

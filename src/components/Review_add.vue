@@ -31,8 +31,20 @@ export default {
     return {
       text_: '',
       num:'20181033',
-      //ID: this.$store.getters.getId
-      ID:'hyunjung1228'
+      Log: this.$store.getters.isLogged,
+      ID: this.$store.getters.getId
+      //'hyunjung1228'
+    }
+  },
+  computed: {
+    isLogged () {
+      console.log(this.$store.getters.isLogged)
+      this.Log=this.$store.getters.isLogged
+      return this.$store.getters.isLogged
+    },
+    getID () {
+      this.ID = this.$store.getters.getId
+      return this.$store.getters.getId
     }
   },
   methods: {
@@ -42,7 +54,7 @@ export default {
       //  name: "Question"
     },
     submitLog: function() {
-      console.log(text_.value)
+      console.log(this.ID)
       var url = 'http://106.10.32.228:3000' + `/request/review?내용=${text_.value}&ID=${this.ID}&접수번호=${this.num}`;
 
       console.log(url)

@@ -30,18 +30,25 @@ export default {
   data() {
     return {
       text_: '',
-      //ID: this.$store.getters.getId
-      ID:'hjchoi'
+      ID: this.$store.getters.getId
+    }
+  },
+  computed: {
+    isLogged () {
+      console.log(this.$store.getters.isLogged)
+      return this.$store.getters.isLogged
+    },
+    getID () {
+      this.ID = this.$store.getters.getId
+      return this.$store.getters.getId
     }
   },
   methods: {
     goBack: function() {
       this.$router.push("question")
-      //this.$router.push({
-      //  name: "Question"
     },
     submitLog: function() {
-      console.log(text_.value)
+      console.log(this.ID)
       var url = 'http://106.10.32.228:3000' + `/request/question?질문내용=${text_.value}&ID=${this.ID}`;
 
       console.log(url)

@@ -2,23 +2,45 @@
   <div class="hello">
     <body>
       <div class = "main">
-        <p><img src="./car.png" width="50px" height="50px" ><p/>
-        <h1>팡석</h1><br/>
+        <p><img src="./car.png" width="150px" height="150px" ><p/>
+        <br>
+        <h3 style='color : red'>{{this.ID}}</h3>
+        <br>
+        <h3 >안녕하세요~</h3>
+
       </div>
     </body>
   </div>
 </template>
 
+
 <script>
-/*export default {
-  name: 'HelloWorld',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+  export default {
+    name: "hello",
+    data() {
+      return {
+        Log: this.$store.getters.isLogged,
+        ID: this.$store.getters.getId
+      }
+    },
+    mounted: function() {
+      this.msg = ''
+      console.log('질문게시판')
+      this.getData()
+    },
+    computed: {
+      isLogged () {
+        console.log(this.$store.getters.isLogged)
+        this.Log = this.$store.getters.isLogged
+        return this.$store.getters.isLogged
+      },
+      getID () {
+        this.ID = this.$store.getters.getId
+        return this.$store.getters.getId
+      }
   }
-}*/
-</script>
+}
+  </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>

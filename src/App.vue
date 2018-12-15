@@ -4,13 +4,19 @@
     <app-nav></app-nav>  <!--네비게이션의 템플릿(nav)가 들어온다.-->
     <router-view></router-view>
     <app-header class = "header">
+      <div v-show="isLogged">
+      <button type="button" class="btn btn-outline-primary btn-sm" style="float:right; padding:1px;" @click.postevent="logOut">
+        <router-link to="/">로그아웃</router-link>
+      </button>
+      </div>
       <div v-show="!isLogged">
         <button type="button" class="btn btn-outline-primary btn-sm" style="float:right; padding:1px;">
-          <router-link to="/login">로그인</router-link>
+          <router-link to="/login">고객 로그인</router-link>
         </button>
         <button type="button" class="btn btn-outline-primary btn-sm" style="float:right; padding:1px;">
-          <router-link to="/login_em">직원</router-link>
+          <router-link to="/login_em">직원 로그인</router-link>
         </button>
+
       </div>
         <br/>
           <ul class="nav justify-content-center">
@@ -45,6 +51,15 @@ export default {
       console.log(this.$store.getters.isLogged)
       return this.$store.getters.isLogged
     }
+  },
+  methods: {
+    logOut(data){
+        console.log(data)
+        this.$store.commit('logOut', {
+            id: '',
+            password: ''
+        })
+    },
   }
 }
 </script>
