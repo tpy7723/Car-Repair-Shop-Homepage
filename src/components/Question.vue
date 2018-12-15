@@ -5,7 +5,7 @@
     <div class="row form-group">
       <div class="col-sm-10"></div>
       <div class="col-sm-2">
-        <button type="button" class="btn btn-secondary" @click="createLog()">글 등록</button>
+        <button v-show="isLogged" type="button" class="btn btn-secondary" @click="createLog()">글 등록</button>
       </div>
     </div>
     <div class="row">
@@ -68,14 +68,8 @@
             console.log(error)
           })
       },
-<<<<<<< HEAD
       createLog: function() {
             this.$router.push("quest_add")
-      }
-=======
-      createLog: function(){
-        this.$router.push("Quest_add.vue")
->>>>>>> 7d3017302971d2a15609cdccadbb1304db05cfc1
       }
 
     }

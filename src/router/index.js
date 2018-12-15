@@ -7,6 +7,7 @@ import Review from '@/components/Review'
 import Reservation from '@/components/Reservation'
 import Quest_add from '@/components/Quest_add'
 import Login_em from '@/components/Login_em'
+import Review_add from '@/components/Review_add'
 
 Vue.use(Router)
 
@@ -45,6 +46,10 @@ export default new Router({
       path:'/login_em',
       name:'Login_em',
       component: Login_em
+    },{
+      path:'/review_add',
+      name:'Review_add',
+      component: Review_add
     }
   ]
 })

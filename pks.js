@@ -55,6 +55,7 @@ app.get('/login_em', function(req, res) {
 })
 });
 
+/*
 router.post('/call/review', (req, res, next) => {
   console.log('in call/review')
   con.query('SELECT * from 후기', (e, r, f) => {
@@ -72,11 +73,13 @@ router.post('/call/review', (req, res, next) => {
       })
     }
   })
-})
-app.get('/', function(req, res) {
-  res.send('Root2');
-  res.send('Rooat2');
 });
+*/
+
+app.get('/', function(req, res) {
+  res.send('Root');
+});
+
 app.get('/login', function(req, res) {
   res.setHeader('Content-Type', 'text/plain');
   console.log('in login_em')
@@ -113,7 +116,7 @@ app.get('/login', function(req, res) {
 	}
 })
 });
-
+/*
 router.post('/call/review', (req, res, next) => {
   console.log('in call/review')
   con.query('SELECT * from 후기', (e, r, f) => {
@@ -127,17 +130,39 @@ router.post('/call/review', (req, res, next) => {
       console.log(r)
       res.send({
         status: 'success',
-        data: r
+        result: JSON.parse(JSON.stringify(r))
       })
     }
   })
 })
-app.get('/calsdl/review', function(req, res) { //게시판 띄우기
-  res.send('Root');
+*/
+app.get('/call/review', function(req, res) {
+   console.log('in call/review')
+   connection.query('SELECT * from 후기', (e, r, f) => {
+
+   res.setHeader('Content-Type', 'text/plain');
+   if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      console.log(r)
+      res.send({
+        status: 'success',
+        result: JSON.parse(JSON.stringify(r)),
+        fields: f
+      })
+    }
+ })
 });
+
 app.get('/request/review', function(req, res) { //게시글 등록
   res.send('Root');
 });
+
+
 app.get('/call/question', function(req, res) {
   console.log('in call/question')
   //  res.send('hell0');
@@ -151,6 +176,7 @@ app.get('/call/question', function(req, res) {
         errMsg: '에러',
       })
     } else {
+      console.log(r)
       res.send({
         status: 'success',
         result: JSON.parse(JSON.stringify(r)),
@@ -183,7 +209,27 @@ app.get('/request/question', function(req, res) { //등록
   })
 });
 app.get('/call/reservation', function(req, res) {
-  res.send('Root');
+  console.log('in call/reservation')
+  //  res.send('hell0');
+  console.log(req.query);
+  var id = req.query.ID;
+  connection.query('SELECT * from 예약게시판 where', (e, r, f) => {
+    res.setHeader('Content-Type', 'text/plain');
+    if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      console.log(r)
+      res.send({
+        status: 'success',
+        result: JSON.parse(JSON.stringify(r)),
+        fields: f
+      })
+    }
+  })
 });
 app.get('/request/reservation', function(req, res) {
   res.send('Root');

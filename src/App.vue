@@ -14,7 +14,7 @@
       </div>
         <br/>
           <ul class="nav justify-content-center">
-            <li class="nav-item">
+            <li class="nav-item" v-show="isLogged">
               <a class="nav-link active"><router-link to="/reservation">예약하기</router-link></a>
             </li>
             <li class="nav-item">
