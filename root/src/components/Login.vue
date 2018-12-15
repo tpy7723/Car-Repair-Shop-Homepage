@@ -44,7 +44,7 @@ export default {
           })
       },
       submit: function(){
-          this.$http.get(this.$config.targetURL+`/login?id=${this.id}&password=${this.password}`)
+          /*this.$http.get(this.$config.targetURL+`/login?id=${this.id}&password=${this.password}`)
           .then((result)=>{
               if(result.data.status == 'success'){ // 로그인 성공
                   console.log('success')
@@ -63,7 +63,7 @@ export default {
                 type: 'alert',
                 text: '서버에 오류가 있습니다.'
             })
-          })
+          })*/
       }
   }
 }
