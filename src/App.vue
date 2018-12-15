@@ -4,12 +4,14 @@
     <app-nav></app-nav>  <!--네비게이션의 템플릿(nav)가 들어온다.-->
     <router-view></router-view>
     <app-header class = "header">
-      <button type="button" class="btn btn-outline-primary btn-sm" style="float:right; padding:1px;">
-        <router-link to="/login">로그인</router-link>
-      </button>
-      <button type="button" class="btn btn-outline-primary btn-sm" style="float:right; padding:1px;">
-        <router-link to="/login_em">직원</router-link>
-      </button>
+      <div v-show="!isLogged">
+        <button type="button" class="btn btn-outline-primary btn-sm" style="float:right; padding:1px;">
+          <router-link to="/login">로그인</router-link>
+        </button>
+        <button type="button" class="btn btn-outline-primary btn-sm" style="float:right; padding:1px;">
+          <router-link to="/login_em">직원</router-link>
+        </button>
+      </div>
         <br/>
           <ul class="nav justify-content-center">
             <li class="nav-item">
@@ -32,7 +34,18 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  data () {
+    return {
+      msg: 'Welcome to Your Vue.js App'
+    }
+  },
+  computed: {
+    isLogged () {
+      console.log(this.$store.getters.isLogged)
+      return this.$store.getters.isLogged
+    }
+  }
 }
 </script>
 
