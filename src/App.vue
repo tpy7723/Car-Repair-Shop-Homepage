@@ -23,7 +23,7 @@
 
         <br/>
           <ul class="nav justify-content-center">
-            <li class="nav-item" v-show="isLogged">
+            <li class="nav-item" v-show="isLogged && getAuthLevel == 4">
               <a class="nav-link active"><router-link to="/reservation">예약</router-link></a>
             </li>
             <li class="nav-item">
@@ -32,7 +32,7 @@
             <li class="nav-item">
               <a class="nav-link"><router-link to="/review">후기게시판</router-link></a>
             </li>
-            <li class="nav-item" v-show="isLogged">
+            <li class="nav-item" v-show="isLogged && getAuthLevel == 4">
               <a class="nav-link"><router-link to="/log">수리기록</router-link></a>
             </li>
             <li class="nav-item" v-show="isLogged && getAuthLevel < 2">
@@ -41,7 +41,7 @@
             <li class="nav-item" v-show="isLogged && getAuthLevel < 2">
               <a class="nav-link"><router-link to="/receipt">접수</router-link></a>
             </li>
-            <li class="nav-item" v-show="isLogged">
+            <li class="nav-item" v-show="isLogged && getAuthLevel == 4">
               <a class="nav-link"><router-link to="/car_info">차량</router-link></a>
             </li>
             <li class="nav-item" v-show="isLogged && getAuthLevel < 2">

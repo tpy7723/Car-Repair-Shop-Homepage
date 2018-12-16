@@ -274,8 +274,9 @@ app.get('/request/question', function(req, res) { //등록
 app.get('/call/reservation', function(req, res) {
   console.log('in call/reservation')
   console.log(req.query);
-  var id_reserv = req.query.ID;
-  connection.query('SELECT * FROM 예약 WHERE ID=?',id_reserv,(e, r, f) => {
+  var id_reserv = req.query.ID
+  console.log(id_reserv)
+  connection.query('SELECT * FROM 예약 WHERE ID=?',[id_reserv],(e, r, f) => {
     res.setHeader('Content-Type', 'text/plain');
     if (e) {
       console.log('에러'+e)

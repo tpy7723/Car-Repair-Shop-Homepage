@@ -75,6 +75,7 @@ export default {
       getData: function(){
         var url = 'http://106.10.32.228:3000/call/reservation'
         console.log(url)
+        console.log(this.getId)
         this.$http.get(url+`?ID=${this.getId}`)
           .then(result => {
             console.log(result)

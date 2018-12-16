@@ -1,14 +1,17 @@
 <template lang="html">
-  <div class="card" style="width: 18rem;">
-    <div class="card-body">
-      <h5 class="card-title">{{this.id}}님의 {{this.num}}</h5>
-    </div>
-    <ul  v-for="(item, index) in list" :key="index" class="list-group list-group-flush">
-      <li class="list-group-item">문제점 :<br/>{{item.문제점}}</li>
-      <li class="list-group-item">담당직원 : {{item.이름}}</li><!--직원과 join해서 직원의 이름을 보여줘야 한다.-->
-      <li class="list-group-item">수리시작날짜 : {{item.수리시작날짜}}</li><!--수리 비용까지 sql에서 넘겨줘야한다.-->
-      <li class="list-group-item">수리완료날짜 : {{item.수리완료날짜}}</li><!--수리 비용까지 sql에서 넘겨줘야한다.-->
-    </ul>
+  <div class="">
+    <br><br><br>
+      <div class="card" style="width: 25rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{this.id}}님의 {{this.num}}</h5>
+        </div>
+        <ul  v-for="(item, index) in list" :key="index" class="list-group list-group-flush">
+          <li class="list-group-item">문제점 :<br/>{{item.문제점}}</li>
+          <li class="list-group-item">담당직원 : {{item.이름}}</li><!--직원과 join해서 직원의 이름을 보여줘야 한다.-->
+          <li class="list-group-item">수리시작날짜 : {{item.수리시작날짜}}</li><!--수리 비용까지 sql에서 넘겨줘야한다.-->
+          <li class="list-group-item">수리완료날짜 : {{item.수리완료날짜}}</li><!--수리 비용까지 sql에서 넘겨줘야한다.-->
+        </ul>
+      </div>
   </div>
 </template>
 
@@ -57,7 +60,7 @@ export default { //후기에 대한 디테일한 수리기록을 보여준다.
 
 <style media="screen">
 .card {
-  padding-top: 10px;
+  padding-top: 30px;
   margin-left: auto;
   margin-right: auto;
 }
