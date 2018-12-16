@@ -65,7 +65,7 @@ export default {
           .then((result)=>{
               if(result.data.status == 'success'){ // 로그인 성공
                   console.log('success')
-
+                  this.$router.push("/")
               }
               else {
                 console.log('error')
