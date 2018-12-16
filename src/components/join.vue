@@ -8,21 +8,21 @@
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="LoginID">ID</label>
-      <input type="text" class="form-control" id="LoginID" placeholder="LoginID">
+      <input type="text" class="form-control" v-model="LoginID">
     </div>
     <div class="form-group col-md-6">
       <label for="Password">Password</label>
-      <input type="password" class="form-control" id="Password" placeholder="Password">
+      <input type="password" class="form-control" v-model="Password" placeholder="Password">
     </div>
   </div>
   <div class="form-row">
   <div class="form-group col-md-6">
     <label for="Name">Name</label>
-    <input type="text" class="form-control" id="Name" placeholder="Name">
+    <input type="text" class="form-control" v-model="Name" placeholder="Name">
   </div>
   <div class="form-group col-md-6">
     <label for="Phone">Phone</label>
-    <input type="text" class="form-control" id="Phone" placeholder="Phone">
+    <input type="text" class="form-control" v-model="Phone" placeholder="Phone">
   </div>
   <br>
 </div>
@@ -58,7 +58,10 @@ export default {
           })
       },
       submit: function(){
-          this.$http.get(this.$config.targetURL+`/join?ID=${this.LoginID}&비밀번호=${this.Password}&이름=${this.Name}&전화번호=${this.Phone}`)
+          var url = 'http://106.10.32.228:3000' + `/request/join?ID=${this.LoginID}&PHONE=${this.Phone}&NAME=${this.Name}&PASSWORD=${this.Password}`;
+          console.log(url)
+          this.$http.get(url)
+
           .then((result)=>{
               if(result.data.status == 'success'){ // 로그인 성공
                   console.log('success')
