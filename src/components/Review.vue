@@ -4,9 +4,6 @@
     <div class="board-box">
       <div class="row form-group">
         <div class="col-sm-10"></div>
-        <div class="col-sm-2">
-          <button v-show="isLogged" type="button" class="btn btn-secondary" @click="createLog()">글 등록</button>
-        </div>
       </div>
       <div class="row">
         <!-- print meeting log list -->

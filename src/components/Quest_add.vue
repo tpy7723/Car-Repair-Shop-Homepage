@@ -48,6 +48,10 @@ export default {
       this.$router.push("question")
     },
     submitLog: function() {
+      if(text_.value=='') {
+        alert("내용을 입력해주세요!")
+        return;
+      }
       var url = 'http://106.10.32.228:3000' + `/request/question?질문내용=${text_.value}&ID=${this.ID}`;
       console.log(url)
       this.$http.get(url)

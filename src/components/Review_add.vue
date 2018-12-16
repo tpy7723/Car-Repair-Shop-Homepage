@@ -30,32 +30,42 @@ export default {
   data() {
     return {
       text_: '',
-      num:'20181033', // 이 ㄱㅓ 해결해야됨
-      Log: this.$store.getters.isLogged,
-      ID: this.$store.getters.getId
-      //'hyunjung1228'
+      num: '',
+      id: ''
     }
   },
+  mounted: function() {
+    console.log('후기 등록')
+    this.getData()
+  },
   computed: {
-    isLogged () {
-      console.log(this.$store.getters.isLogged)
-      this.Log=this.$store.getters.isLogged
-      return this.$store.getters.isLogged
+    getData: function(){
+      console.log('in review_add')
+      this.num = this.$route.query.num
+      this.id = this.$route.query.id
+      console.log(this.num);
+      console.log(this.num);
+    },
+    getNum() {
+      console.log(this.$route.query.num)
+      return this.$route.query.num
     },
     getID () {
-      this.ID = this.$store.getters.getId
       return this.$store.getters.getId
     }
   },
   methods: {
     goBack: function() {
-      this.$router.push("review")
-      //this.$router.push({
-      //  name: "Question"
+      this.$router.push("log")
     },
     submitLog: function() {
-      console.log(this.ID)
-      var url = 'http://106.10.32.228:3000' + `/request/review?내용=${text_.value}&ID=${this.ID}&접수번호=${this.num}`;
+      if(text_.value=='') {
+        alert("내용을 입력해주세요!")
+        return;
+      }
+      console.log(this.id)
+
+      var url = 'http://106.10.32.228:3000' + `/request/review?내용=${text_.value}&ID=${this.getID}&접수번호=${this.num}`;
 
       console.log(url)
       this.$http.get(url)
@@ -65,7 +75,7 @@ export default {
             this.$router.push("review")
           } else {
             console.log('error')
-
+            alert("후기는 한 번만 가능합니다!")
           }
 
         })

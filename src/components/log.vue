@@ -11,7 +11,7 @@
           <thead>
             <tr class="text-center">
               <th class="text-center">접수번호</th>
-              <th class="text-center">내용</th>
+              <th class="text-center">문제점</th>
               <th class="text-center">수리시작날짜</th>
               <th class="text-center">수리완료날짜</th>
               <th class="text-center">직원번호</th>
@@ -21,11 +21,11 @@
           <tbody>
             <tr v-for="(item, index) in list" :key="index" style="cursor: pointer">
               <td>{{item.접수번호}}</td>
-              <td>{{item.내용}}</td>
+              <td>{{item.문제점}}</td>
               <td>{{item.수리시작날짜}}</td>
               <td>{{item.수리완료날짜}}</td>
               <td>{{item.직원번호}}</td>
-              <td><button type="button" class="btn btn-primary" @click="review(item)">삭제</button></td>
+              <td><button type="button" class="btn btn-primary" @click="createLog(item)">후기 등록</button></td>
             </tr>
           </tbody>
         </table>
@@ -35,54 +35,78 @@
 </template>
 
 <script>
-  export default {
-    name: 'log',
-    data() {
-      return {
-        msg: '게시판',
-        list: [],
-        id: this.$store.getters.getId
-      }
+export default {
+  name: 'log',
+  data() {
+    return {
+      msg: '게시판',
+      list: [],
+      id: this.$store.getters.getId
+    }
+  },
+  mounted: function() {
+    this.msg = ''
+    console.log('후기게시판')
+    this.getData()
+  },
+  methods: {
+    isLogged() {
+      console.log(this.$store.getters.isLogged)
+      return this.$store.getters.isLogged
     },
-    mounted: function() {
-      this.msg = ''
-      console.log('후기게시판')
-      this.getData()
+    createLog: function(item) {
+      var url = 'http://106.10.32.228:3000/confirm/log'
+      console.log('confirm')
+      console.log(item.접수번호)
+      this.$http.get(url + `?NUM=${item.접수번호}`)
+        .then(result => {
+          console.log(result)
+          console.log(result.data.status)
+        })
+        .catch(error => {
+          console.log('서버에러')
+          console.log(error)
+        })
+      console.log(this.list)
+      this.$router.push({
+        name: 'Review_add',
+        query: {
+          id: item.ID,
+          num: item.접수번호
+        }
+      })
     },
-    methods: {
-      getData: function() {
-        var url = 'http://106.10.32.228:3000/log'
-        console.log(url)
-        this.$http.get(url+`?ID=${this.id}`)
-          .then(result => {
-            console.log(result)
-            console.log(result.data.status)
-            this.list = result.data.result
-            console.log(this.list)
-            this.list.forEach(v => {
-              var datainfo = v.수리시작날짜
-              v.수리시작날짜 = this.$moment(dateinfo).tz('Asia/Seoul').format('YYYY년 M월 D일 H시 m분')
-              var datainfo = v.수리완료날짜
-              v.수리완료날짜 = this.$moment(dateinfo).tz('Asia/Seoul').format('YYYY년 M월 D일 H시 m분')
-            })
+    getData: function() {
+      var url = 'http://106.10.32.228:3000/log'
+      console.log(url)
+      this.$http.get(url + `?ID=${this.id}`)
+        .then(result => {
+          console.log(result)
+          console.log(result.data.status)
+          this.list = result.data.result
+          console.log(this.list)
+          this.list.forEach(v => {
+            var datainfo = v.수리시작날짜
+            v.수리시작날짜 = this.$moment(dateinfo).tz('Asia/Seoul').format('YYYY년 M월 D일 H시 m분')
+            var datainfo = v.수리완료날짜
+            v.수리완료날짜 = this.$moment(dateinfo).tz('Asia/Seoul').format('YYYY년 M월 D일 H시 m분')
           })
-          .catch(error => {
-            console.log('서버에러')
-            console.log(error)
-          })
-      }
+        })
+        .catch(error => {
+          console.log('서버에러')
+          console.log(error)
+        })
     }
   }
-  </script>
-
+}
 </script>
 
 <style media="screen">
-.log{
+.log {
   width: 100%;
   padding-top: 10px;
   margin-left: auto;
   margin-right: auto;
-  text-align : center;
+  text-align: center;
 }
 </style>
