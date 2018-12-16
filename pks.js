@@ -228,7 +228,7 @@ app.get('/call/comment', function(req, res) {
   console.log(req.query);
   var NUM = req.query.질문번호;
 
-  connection.query('SELECT * from 답변댓글 where 질문번호=?', NUM,(e, r, f) => {
+  connection.query('SELECT 이름,작성시간,내용 from 답변댓글 natural join 직원 where 질문번호=?', NUM,(e, r, f) => {
     res.setHeader('Content-Type', 'text/plain');
     if (e) {
       console.log(e)
@@ -297,7 +297,7 @@ app.get('/call/reservation', function(req, res) {
   console.log(req.query);
   var id_reserv = req.query.ID
   console.log(id_reserv)
-  connection.query('SELECT * FROM 예약 WHERE ID=?',[id_reserv],(e, r, f) => {
+  connection.query('SELECT EXISTS (SELECT * FROM 예약 WHERE ID = ?) AS flag',[id_reserv],(e, r, f) => {
     res.setHeader('Content-Type', 'text/plain');
     if (e) {
       console.log('에러'+e)
@@ -306,20 +306,30 @@ app.get('/call/reservation', function(req, res) {
         errMsg: '에러'
       })
     } else {
-      if(r[0].ID != id_reserv){
-        res.send({
-          status:'success',
-          Msg:'no-result'
+      if(r[0].flag==1){
+        connection.query('SELECT * FROM 예약 WHERE ID = ?',[id_reserv],(e, r, f) => {
+          if(r[0].ID != id_reserv){
+            res.send({
+              status:'success',
+              Msg:'no-result'
+            })
+          }
+          else{
+            res.send({
+              status: 'success',
+              result: JSON.parse(JSON.stringify(r)),
+              Msg: 'yes'
+            })
+          }
         })
+        }
+        else{
+          res.send({
+            status:'success',
+            Msg:'no-result'
+          })
+        }
       }
-      else{
-        res.send({
-          status: 'success',
-          result: JSON.parse(JSON.stringify(r)),
-          Msg: 'yes'
-        })
-      }
-    }
   })
 });
 

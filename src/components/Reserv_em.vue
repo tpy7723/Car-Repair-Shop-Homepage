@@ -108,9 +108,4 @@ export default {
   margin-right: auto;
   text-align: center;
 }
-#edit{
-  width:50%;
-  margin-left: auto;
-  margin-right: auto;
-}
 </style>
