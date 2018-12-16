@@ -14,7 +14,9 @@
               <th class="text-center">문제점</th>
               <th class="text-center">수리시작날짜</th>
               <th class="text-center">수리완료날짜</th>
+              <th class="text-center">수리상태</th>
               <th class="text-center">직원번호</th>
+              <th class="text-center">차량번호</th>
               <th class="text-center"></th>
             </tr>
           </thead>
@@ -24,9 +26,12 @@
               <td>{{item.문제점}}</td>
               <td>{{item.수리시작날짜}}</td>
               <td>{{item.수리완료날짜}}</td>
+              <td>{{item.수리상태}}</td>
               <td>{{item.직원번호}}</td>
+              <td>{{item.차량번호}}</td>
               <td><button type="button" class="btn btn-primary" @click="createLog(item)">후기 등록</button></td>
             </tr>
+            수리상태 : 수리 전=0, 수리 중=1, 수리 완료=2
           </tbody>
         </table>
       </div>
@@ -40,8 +45,7 @@ export default {
   data() {
     return {
       msg: '게시판',
-      list: [],
-      id: this.$store.getters.getId
+      list: []
     }
   },
   mounted: function() {
@@ -49,25 +53,17 @@ export default {
     console.log('후기게시판')
     this.getData()
   },
-  methods: {
-    isLogged() {
+  computed: {
+    isLogged () {
       console.log(this.$store.getters.isLogged)
       return this.$store.getters.isLogged
     },
+    getId(){
+      return this.$store.getters.getId
+    }
+  },
+  methods: {
     createLog: function(item) {
-      var url = 'http://106.10.32.228:3000/confirm/log'
-      console.log('confirm')
-      console.log(item.접수번호)
-      this.$http.get(url + `?NUM=${item.접수번호}`)
-        .then(result => {
-          console.log(result)
-          console.log(result.data.status)
-        })
-        .catch(error => {
-          console.log('서버에러')
-          console.log(error)
-        })
-      console.log(this.list)
       this.$router.push({
         name: 'Review_add',
         query: {
@@ -79,7 +75,7 @@ export default {
     getData: function() {
       var url = 'http://106.10.32.228:3000/log'
       console.log(url)
-      this.$http.get(url + `?ID=${this.id}`)
+      this.$http.get(url + `?ID=${this.getId}`)
         .then(result => {
           console.log(result)
           console.log(result.data.status)

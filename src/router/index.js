@@ -16,6 +16,8 @@ import Review_detail from '@/components/Review_detail'
 import Receipt from '@/components/Receipt'
 import Car_info from '@/components/Car_info'
 import Comment from '@/components/Comment'
+import Log_em from '@/components/Log_em'
+
 
 Vue.use(Router)
 
@@ -86,6 +88,10 @@ export default new Router({
       path:'/comment',
       name:'Comment',
       component: Comment
+    },{
+      path:'/log_em',
+      name:'Log_em',
+      component: Log_em
     }
   ]
 })
