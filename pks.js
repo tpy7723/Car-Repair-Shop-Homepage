@@ -95,6 +95,65 @@ app.get('/login', function(req, res) {
 	}
 })
 });
+
+app.get('/request/join', function(req, res) {
+   console.log('in /request/join')
+   console.log(req.query);
+   var ID = req.query.ID,
+       NAME = req.query.NAME,
+       PHONE = req.query.PHONE,
+       PASSWORD = req.query.PASSWORD;
+
+   connection.query('insert into 고객 values (?,?,?,?,?)',[ID,NAME,PHONE,PASSWORD,0],(e,r,f) =>{
+   console.log(connection.query);
+ res.setHeader('Content-Type', 'text/plain');
+     if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      res.send({
+        status: 'success'
+      })
+   }
+  })
+});
+
+app.get('/request/join_em', function(req, res) {
+   console.log('in /request/join_em')
+   console.log(req.query);
+   var ID = req.query.ID,
+       NAME = req.query.NAME,
+       PHONE = req.query.PHONE,
+       PASSWORD = req.query.PASSWORD;
+       START= req.query.START;
+       SUPER= req.query.SUPER;
+   console.log(ID);
+   console.log(NAME);
+   console.log(PHONE);
+   console.log(PASSWORD);
+   console.log(SUPER);
+
+   connection.query('insert into 직원 values (?,?,?,?,?,?)',[ID,SUPER,NAME,PHONE,START,PASSWORD],(e,r,f) =>{
+   console.log(connection.query);
+ res.setHeader('Content-Type', 'text/plain');
+     if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      res.send({
+        status: 'success'
+      })
+   }
+  })
+});
+
+
 app.get('/call/review', function(req, res) {
    console.log('in call/review')
    connection.query('SELECT * from 후기', (e, r, f) => {
@@ -243,9 +302,10 @@ app.get('/log', function(req, res) {
 
 app.get('/call/review_detail', function(req, res) {
   console.log('in /call/review_detail')
-  console.log(req.query);
-  var id_log = req.query.ID;
-  connection.query('SELECT 이,수리시작날짜,수리완료날짜 from 수리기록 NATURAL JOIN 직원 WHERE ID = ?',id_log, (e, r, f) => {
+  console.log(req.query)
+  var num = req.query.num
+  console.log(num)
+  connection.query('SELECT 이름,문제점,수리시작날짜,수리완료날짜 from 수리기록 NATURAL JOIN 직원 WHERE 접수번호 = ?',[num], (e, r, f) => {
   res.setHeader('Content-Type', 'text/plain');
   if (e) {
      console.log(e)
@@ -264,6 +324,27 @@ app.get('/call/review_detail', function(req, res) {
  })
 });
 
+app.get('/delete/quesiton', function(req, res) {
+  console.log('in /call/review_detail')
+  console.log(req.query);
+  var id_log = req.query.id;
+
+  connection.query('delete from 질문게시판 where 질문번호=?',id_log ,(e,r,f) =>{
+     console.log(connection.query);
+     res.setHeader('Content-Type', 'text/plain');
+     if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      res.send({
+        status: 'success'
+      })
+   }
+  })
+});
 
 app.get('/request/reservation', function(req, res) {
   res.send('Root');

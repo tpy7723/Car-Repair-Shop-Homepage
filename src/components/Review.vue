@@ -17,6 +17,7 @@
               <th class="text-center">내용</th>
               <th class="text-center">작성시간</th>
               <th class="text-center">고객ID</th>
+              <th class="text-center"></th>
             </tr>
           </thead>
           <tbody>
@@ -25,6 +26,7 @@
               <td>{{item.내용}}</td>
               <td>{{item.작성시간}}</td>
               <td>{{item.ID}}</td>
+              <td><button v-show="user_id == item.ID" type="button" class="btn btn-primary" @click="deleteReview(item)">삭제</button></td>
             </tr>
           </tbody>
         </table>
@@ -46,6 +48,9 @@
       isLogged () {
         console.log(this.$store.getters.isLogged)
         return this.$store.getters.isLogged
+      },
+      user_id () {
+        return this.$store.getters.getId
       }
     },
     mounted: function() {
@@ -75,15 +80,31 @@
           })
       },
       createLog: function() {
-            this.$router.push("review_add")
+            this.$router.push("Review_add")
       },
       readBoard: function(item){
+        console.log('readBoard')
+        console.log(item)
           this.$router.push({
             name: 'Review_detail',
             query: {
-              id: item.ID
+              id : item.ID,
+              num: item.접수번호
             }
           })
+        },
+        deleteReview: function(item){
+          var url = 'http://106.10.32.228:3000/delete/quesiton'
+          console.log(url)
+          this.$http.get(url+`?ID=${item.질문번호}`)
+            .then(result => {
+              console.log(result)
+              this.getData()
+            })
+            .catch(error => {
+              console.log('서버에러')
+              console.log(error)
+            })
         }
     }
   }
