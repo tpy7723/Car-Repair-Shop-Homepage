@@ -41,6 +41,9 @@
             <li class="nav-item" v-show="getAuthLevel < 2">
               <a class="nav-link"><router-link to="/receipt">접수</router-link></a>
             </li>
+            <li class="nav-item" v-show="isLogged">
+              <a class="nav-link"><router-link to="/car_info">차량</router-link></a>
+            </li>
           </ul>
     </app-header>
     <div class="footer">

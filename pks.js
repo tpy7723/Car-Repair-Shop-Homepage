@@ -282,7 +282,7 @@ app.get('/log', function(req, res) {
    console.log('in log')
    console.log(req.query);
    var id_log = req.query.ID;
-   connection.query('SELECT * from 수리기록 WHERE ID = ?',id_log, (e, r, f) => {
+   connection.query('SELECT 접수번호,문제점,수리시작날짜,수리완료날짜,직원번호,차량번호 from 수리기록 WHERE ID = ?',id_log, (e, r, f) => {
    res.setHeader('Content-Type', 'text/plain');
    if (e) {
       console.log(e)
@@ -399,6 +399,75 @@ app.get('/receipt', function(req, res) {
   receipt_num= receipt_num+1
 });
 
+//검사안함.
+app.get('/create/car', function(req, res) {
+  console.log('in /receipt')
+  console.log(req.query);
+  var id = req.query.id;
+  var years = req.query.years;
+  var num = req.query.num;
+  var model = req.query.model;
+
+  connection.query('insert into 차량 values (?,?,?,?)',[num,model,years,id],(e,r,f) =>{
+     console.log(connection.query);
+     res.setHeader('Content-Type', 'text/plain');
+     if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      res.send({
+        status: 'success'
+      })
+   }
+  })
+});
+
+app.get('/data/car', function(req, res) {
+  console.log('in /data/car')
+  console.log(req.query);
+  var id = req.query.id;
+  connection.query('select * from 차량 where ID=?',[id],(e,r,f) =>{
+     console.log(connection.query);
+     res.setHeader('Content-Type', 'text/plain');
+     if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      res.send({
+        status: 'success',
+        result: r
+      })
+   }
+  })
+});
+
+//검사안함.
+app.get('/delete/car', function(req, res) {
+  console.log('in /data/car')
+  console.log(req.query);
+  var id = req.query.id;
+  connection.query('delete from 차량 where 차량번호=?',[id],(e,r,f) =>{
+     console.log(connection.query);
+     res.setHeader('Content-Type', 'text/plain');
+     if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      res.send({
+        status: 'success'
+      })
+     }
+    })
+  });
 
 app.get('/request/reservation', function(req, res) {
   res.send('Root');
