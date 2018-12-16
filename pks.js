@@ -18,6 +18,7 @@ app.use(cors());
 
 const router = express.Router();
 var receipt_num = 20181141;
+var reserv_num = 20180142;
 
 app.get('/login_em', function(req, res) {
   res.setHeader('Content-Type', 'text/plain');
@@ -381,7 +382,7 @@ app.get('/receipt', function(req, res) {
   var newDate = new Date(); // 현재 시각 받아옴
   var time = newDate.toFormat('YYYY-MM-DD HH24:MI:SS');
 
-  connection.query('insert into 수리기록 values (?,?,?,?,?,?,?,?,?)',[receipt_num,time,prob,0,'NULL','NULL', em_id,id,num],(e,r,f) =>{
+  connection.query('insert into 수리기록 (접수번호,접수시간,문제점,수리상태,직원번호,ID,차량번호) values (?,?,?,?,?,?,?)',[receipt_num,time,prob,0, em_id,id,num],(e,r,f) =>{
      console.log(connection.query);
      res.setHeader('Content-Type', 'text/plain');
      if (e) {
@@ -447,7 +448,6 @@ app.get('/data/car', function(req, res) {
   })
 });
 
-//검사안함.
 app.get('/delete/car', function(req, res) {
   console.log('in /data/car')
   console.log(req.query);
@@ -470,7 +470,67 @@ app.get('/delete/car', function(req, res) {
   });
 
 app.get('/request/reservation', function(req, res) {
-  res.send('Root');
+  console.log('in /request/reservation')
+  console.log(req.query);
+  var id = req.query.id;
+  var date = req.query.date;
+  var loc = req.query.loc;
+  if(loc == ''){
+    console.log(0)
+    connection.query('insert into 예약 (예약번호,희망날짜,ID,예약승인) values(?,?,?,?)',[reserv_num,date,id,'0'],(e,r,f) =>{
+       console.log(connection.query);
+       res.setHeader('Content-Type', 'text/plain');
+       if (e) {
+        console.log(e)
+        res.send({
+          status: 'error'
+        })
+      } else {
+        res.send({
+          status: 'success'
+        })
+       }
+      })
+  }else{
+    console.log(loc)
+    connection.query('insert into 예약 (예약번호,희망날짜,픽업장소,ID,예약승인) values(?,?,?,?,?)',[reserv_num,date,loc,id,0],(e,r,f) =>{
+       console.log(connection.query);
+       res.setHeader('Content-Type', 'text/plain');
+       if (e) {
+        console.log(e)
+        res.send({
+          status: 'error'
+        })
+      } else {
+        res.send({
+          status: 'success'
+        })
+       }
+      })
+  }
+  console.log(loc)
+
+    reserv_num = reserv_num+1;
+});
+
+app.get('/delete/reservation', function(req, res) {
+  console.log('in /delete/reservation')
+  console.log(req.query);
+  var id = req.query.ID;
+    connection.query('delete from 예약 where 예약번호 = ?',[id],(e,r,f) =>{
+       console.log(connection.query);
+       res.setHeader('Content-Type', 'text/plain');
+       if (e) {
+        console.log(e)
+        res.send({
+          status: 'error'
+        })
+      } else {
+        res.send({
+          status: 'success'
+        })
+       }
+      })
 });
 
 

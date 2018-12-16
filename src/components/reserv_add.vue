@@ -1,23 +1,13 @@
 <template>
   <body>
   <div class="reserv_add">
-    <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Dropdown button
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" href="#">Action</a>
-      <a class="dropdown-item" href="#">Another action</a>
-      <a class="dropdown-item" href="#">Something else here</a>
-    </div>
-  </div>
+    <h1 italic> 원하는 예약 날짜를 입력하세요 </h1>
+    이번달의 예약만 신청 가능합니다.
   <br/>
-  <select name='fruits'>
-    <option value='' selected>-- 선택 --</option>
-    <option value='http://www.naver.com'>사과</option>
-    <option value='banana'>바나나</option>
-    <option value='lemon'>레몬</option>
-  </select>
+  <input type="text" class="form-control" v-model="day" placeholder="1">일
+  <br/>
+  <input type="text" class="form-control" v-model="loc" placeholder="픽업의 경우 원하는 장소를 적어주세요">
+  <button type="submit" class="btn btn-primary" @click.prevent="submitLog">예약</button>
 </div>
 </body>
 </template>
@@ -27,46 +17,56 @@ export default {
   name: "reservation_add",
   data() {
     return {
-      id: this.$store.getters.getId,
-      date:'',
-      month:'',
-      year:'',
-      today:''
+      day:'',
+      loc:''
+    }
+  },
+  computed: {
+    getId () {
+        return this.$store.getters.getId
     }
   },
   mounted: function() {
     console.log('예약신청게시판')
-    this.getDate()
   },
   methods: {
     goBack: function() {
       this.$router.push("reservation")
     },
-    getDate(){
-      this.today = new Date();
-    },
     submitLog: function() {
-      var reserv_date = this.year+'-'+this.month+'-'+this.date
-      var url = 'http://106.10.32.228:3000' + `/request/reservation?id=${this.id}&date=${this.reserv_date}`;
+      var today = new Date();
+      var year = today.getFullYear()
+      var month = today.getMonth() +1
+      if(this.day < today.getDate()){
+        alert('날짜를 확인하여 주십시오');
+      }
+      else if(this.day>31){
+        alert('날짜를 확인하여 주십시오');
+      }
+      else{
+        var reserv_date = year+'-'+month+'-'+this.day
+        console.log(reserv_date)
+        var url = 'http://106.10.32.228:3000' + `/request/reservation?id=${this.getId}&date=${reserv_date}&loc=${this.loc}`;
 
-      console.log(url)
-      this.$http.get(url)
-        .then((result) => {
-          if (result.data.status == 'success') {
-            console.log('success')
-            this.$router.push("reservation")
-          } else {
-            console.log('error')
-          }
-        })
-        .catch((error) => {
-          console.log('server error')
-          console.log(error)
-          this.$notice({
-            type: 'alert',
-            text: '서버에 오류가 있습니다.'
+        console.log(url)
+        this.$http.get(url)
+          .then((result) => {
+            if (result.data.status == 'success') {
+              console.log('success')
+              this.$router.push("reservation")
+            } else {
+              console.log('error')
+            }
           })
-        })
+          .catch((error) => {
+            console.log('server error')
+            console.log(error)
+            this.$notice({
+              type: 'alert',
+              text: '서버에 오류가 있습니다.'
+            })
+          })
+      }
     }
   }
 
@@ -75,7 +75,7 @@ export default {
 
 <style media="screen">
 .reserv_add {
-  width: 100%;
+  width: 50%;
   padding-top: 20px;
   margin-left: auto;
   margin-right: auto;

@@ -13,18 +13,20 @@
         <table class="table table-striped">
           <thead>
             <tr class="text-center">
-              <th class="text-center">#</th>
+              <th class="text-center">예약번호</th>
               <th class="text-center">예약승인</th>
               <th class="text-center">희망날짜</th>
               <th class="text-center">픽업장소</th>
+              <th class="text-center"></th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in list" @click="readBoard(item)" :key="index" style="cursor: pointer">
-              <td scope="col">{{index+1}}</td>
+            <tr v-for="(item, index) in list" :key="index" style="cursor: pointer">
+              <td>{{item.예약번호}}</td>
               <td>{{item.예약승인}}</td>
               <td>{{item.희망날짜}}</td>
               <td>{{item.픽업장소}}</td>
+              <td><button v-show="getId == item.ID" type="button" class="btn btn-primary" @click="deleteReserv(item)">삭제</button></td>
             </tr>
           </tbody>
         </table>
@@ -96,14 +98,25 @@ export default {
             console.log(error)
           })
       },
-      submit: function(){
-        this.$router.push("reserve_add")
-      },
       goBack: function(){
         this.$router.push("/")
       },
       createLog: function(){
-        this.$router.push("reserv_add")
+        this.$router.push("/reserv_add")
+      },
+      deleteReserv: function(item){
+        var url = 'http://106.10.32.228:3000/delete/reservation'
+        console.log(url)
+        this.$http.get(url+`?ID=${item.예약번호}`)
+          .then(result => {
+            console.log(result)
+            console.log(result.data.status)
+          })
+          .catch(error => {
+            console.log('서버에러')
+            console.log(error)
+          })
+          this.getData()
       }
   }
 }
