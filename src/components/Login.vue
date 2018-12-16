@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <br><br>
-    <h1 italic> 로그인 </h1>
+    <h1 italic> 고객 로그인 </h1>
     <br><br>
     <div v-if = "isLogged">
       <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -23,7 +23,7 @@
                    placeholder="Password" v-model="password">
       </div>
       <br>
-      <button class="btn btn-primary" @click.prevent="submit">Login</button>
+      <button class="btn btn-primary" @click.prevent="submit">로그인</button>
       <button type="button" class="btn btn-outline-primary btn-sm" style="padding:10px;">
         <router-link to="/join">회원가입</router-link>
       </button>
