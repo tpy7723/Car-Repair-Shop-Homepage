@@ -168,7 +168,6 @@ app.get('/call/review', function(req, res) {
         errMsg: '에러',
       })
     } else {
-      console.log(r)
       res.send({
         status: 'success',
         result: JSON.parse(JSON.stringify(r)),
@@ -214,7 +213,30 @@ app.get('/call/notcommentedquestion', function(req, res) {
         errMsg: '에러',
       })
     } else {
-      console.log(r)
+      res.send({
+        status: 'success',
+        result: JSON.parse(JSON.stringify(r)),
+        fields: f
+      })
+    }
+  })
+});
+
+
+app.get('/call/comment', function(req, res) {
+  console.log('in call/comment')
+  console.log(req.query);
+  var NUM = req.query.질문번호;
+
+  connection.query('SELECT * from 답변댓글 where 질문번호=?', NUM,(e, r, f) => {
+    res.setHeader('Content-Type', 'text/plain');
+    if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
       res.send({
         status: 'success',
         result: JSON.parse(JSON.stringify(r)),
@@ -238,7 +260,6 @@ app.get('/call/question', function(req, res) {
         errMsg: '에러',
       })
     } else {
-      console.log(r)
       res.send({
         status: 'success',
         result: JSON.parse(JSON.stringify(r)),
@@ -285,7 +306,6 @@ app.get('/call/reservation', function(req, res) {
         errMsg: '에러'
       })
     } else {
-      console.log(r)
       if(r[0].ID != id_reserv){
         res.send({
           status:'success',
@@ -303,6 +323,48 @@ app.get('/call/reservation', function(req, res) {
   })
 });
 
+app.get('/reserv_em', function(req, res) {
+  console.log('in reserv_em')
+  connection.query('SELECT * from 예약 where 예약승인 = ?',['0'],(e, r, f) => {
+    res.setHeader('Content-Type', 'text/plain');
+    if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      res.send({
+        status: 'success',
+        result: JSON.parse(JSON.stringify(r)),
+        fields: f
+      })
+    }
+  })
+});
+
+app.get('/call/reserv_em', function(req, res) {
+  console.log('in call/reserv_em')
+  console.log(req.query);
+  var id = req.query.id;
+  connection.query('UPDATE 예약 SET 예약승인=? where 예약번호 = ?',['1',id], (e, r, f) => {
+    res.setHeader('Content-Type', 'text/plain');
+    if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      res.send({
+        status: 'success',
+        result: JSON.parse(JSON.stringify(r)),
+        fields: f
+      })
+    }
+  })
+});
+
 app.get('/log', function(req, res) {
    console.log('in log')
    console.log(req.query);
@@ -316,7 +378,6 @@ app.get('/log', function(req, res) {
         errMsg: '에러',
       })
     } else {
-      console.log(r)
       res.send({
         status: 'success',
         result: JSON.parse(JSON.stringify(r)),
@@ -339,7 +400,6 @@ app.get('/log_em', function(req, res) {
         errMsg: '에러',
       })
     } else {
-      console.log(r)
       res.send({
         status: 'success',
         result: JSON.parse(JSON.stringify(r)),
@@ -365,7 +425,6 @@ app.get('/editStart/log_em', function(req, res) {
         errMsg: '에러',
       })
     } else {
-      console.log(r)
       res.send({
         status: 'success'
       })
@@ -397,7 +456,6 @@ app.get('/editState/log_em', function(req, res) {
            errMsg: '에러',
          })
        } else {
-         console.log(r2)
          res.send({
            status: 'success'
          })
@@ -424,7 +482,6 @@ app.get('/editFinish/log_em', function(req, res) {
         errMsg: '에러',
       })
     } else {
-      console.log(r)
       res.send({
         status: 'success'
       })
@@ -446,7 +503,6 @@ app.get('/call/review_detail', function(req, res) {
        errMsg: '에러',
      })
    } else {
-     console.log(r)
      res.send({
        status: 'success',
        result: JSON.parse(JSON.stringify(r)),

@@ -47,6 +47,9 @@
             <li class="nav-item" v-show="isLogged && getAuthLevel < 2">
               <a class="nav-link"><router-link to="/comment">댓글 현황</router-link></a>
             </li>
+            <li class="nav-item" v-show="isLogged && getAuthLevel < 2">
+              <a class="nav-link"><router-link to="/reserv_em">예약 현황</router-link></a>
+            </li>
           </ul>
     </app-header>
     <div class="footer">
