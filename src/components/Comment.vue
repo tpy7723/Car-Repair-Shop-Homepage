@@ -1,5 +1,6 @@
 <template>
 <div class="comment">
+  <br><br><br>
   댓글 달리지 않은 게시글
   <div class="board-box">
     <div class="row form-group">

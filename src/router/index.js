@@ -19,7 +19,10 @@ import Comment from '@/components/Comment'
 import Log_em from '@/components/Log_em'
 import Comment_add from '@/components/Comment_add'
 import Pluscomment from '@/components/Pluscomment'
+import Reserv_em from '@/components/Reserv_em'
+
 Vue.use(Router)
+
 
 export default new Router({
   routes: [
@@ -100,6 +103,10 @@ export default new Router({
       path:'/pluscomment',
       name:'Pluscomment',
       component: Pluscomment
+    },{
+      path:'/reserv_em',
+      name:'Reserv_em',
+      component: Reserv_em
     }
   ]
 })
