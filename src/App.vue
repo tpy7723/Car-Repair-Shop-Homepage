@@ -19,8 +19,8 @@
         <button type="button" class="btn btn-outline-primary btn-sm" style="float:right; padding:5px;">
           <router-link to="/login_em">직원 로그인</router-link>
         </button>
-
       </div>
+
         <br/>
           <ul class="nav justify-content-center">
             <li class="nav-item" v-show="isLogged">
@@ -43,6 +43,9 @@
             </li>
             <li class="nav-item" v-show="isLogged">
               <a class="nav-link"><router-link to="/car_info">차량</router-link></a>
+            </li>
+            <li class="nav-item" v-show="getAuthLevel < 2">
+              <a class="nav-link"><router-link to="/comment">댓글 현황</router-link></a>
             </li>
           </ul>
     </app-header>
