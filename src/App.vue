@@ -35,16 +35,16 @@
             <li class="nav-item" v-show="isLogged">
               <a class="nav-link"><router-link to="/log">수리기록</router-link></a>
             </li>
-            <li class="nav-item" v-show="getAuthLevel < 2">
+            <li class="nav-item" v-show="isLogged && getAuthLevel < 2">
               <a class="nav-link"><router-link to="/log_em">총 수리기록</router-link></a>
             </li>
-            <li class="nav-item" v-show="getAuthLevel < 2">
+            <li class="nav-item" v-show="isLogged && getAuthLevel < 2">
               <a class="nav-link"><router-link to="/receipt">접수</router-link></a>
             </li>
             <li class="nav-item" v-show="isLogged">
               <a class="nav-link"><router-link to="/car_info">차량</router-link></a>
             </li>
-            <li class="nav-item" v-show="getAuthLevel < 2">
+            <li class="nav-item" v-show="isLogged && getAuthLevel < 2">
               <a class="nav-link"><router-link to="/comment">댓글 현황</router-link></a>
             </li>
           </ul>

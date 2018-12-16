@@ -202,6 +202,29 @@ app.get('/request/review', function(req, res) { //게시글 등록
 });
 
 
+app.get('/call/notcommentedquestion', function(req, res) {
+  console.log('in /call/notcommentedquestion')
+
+  connection.query('SELECT * from 질문게시판 where 질문번호 NOT IN (select 질문번호 from 답변댓글)', (e, r, f) => {
+    res.setHeader('Content-Type', 'text/plain');
+    if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      console.log(r)
+      res.send({
+        status: 'success',
+        result: JSON.parse(JSON.stringify(r)),
+        fields: f
+      })
+    }
+  })
+});
+
+
 app.get('/call/question', function(req, res) {
   console.log('in call/question')
   //  res.send('hell0');
@@ -283,7 +306,7 @@ app.get('/log', function(req, res) {
    console.log('in log')
    console.log(req.query);
    var id_log = req.query.ID;
-   connection.query('SELECT 접수번호,문제점,수리시작날짜,수리완료날짜,직원번호,차량번호 from 수리기록 WHERE ID = ?',id_log, (e, r, f) => {
+   connection.query('SELECT 접수번호,문제점,수리상태,수리시작날짜,수리완료날짜,직원번호,차량번호 from 수리기록 WHERE ID = ?',id_log, (e, r, f) => {
    res.setHeader('Content-Type', 'text/plain');
    if (e) {
       console.log(e)
@@ -297,6 +320,112 @@ app.get('/log', function(req, res) {
         status: 'success',
         result: JSON.parse(JSON.stringify(r)),
         fields: f
+      })
+    }
+ })
+});
+
+app.get('/log_em', function(req, res) {
+   console.log('in log')
+   console.log(req.query);
+   var id_log = req.query.ID;
+   connection.query('SELECT 접수번호,문제점,수리상태,수리시작날짜,수리완료날짜,차량번호 from 수리기록 WHERE 직원번호 = ?',id_log, (e, r, f) => {
+   res.setHeader('Content-Type', 'text/plain');
+   if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      console.log(r)
+      res.send({
+        status: 'success',
+        result: JSON.parse(JSON.stringify(r)),
+        fields: f
+      })
+    }
+ })
+});
+
+
+app.get('/editStart/log_em', function(req, res) {
+   console.log('in editStart/log_em')
+   console.log(req.query);
+   var id_log = req.query.ID;
+   var newDate = new Date();
+   var time = newDate.toFormat('YYYY-MM-DD HH24:MI:SS');
+   connection.query('update 수리기록 set 수리시작날짜=? WHERE 접수번호 = ?',[time,id_log], (e, r, f) => {
+   res.setHeader('Content-Type', 'text/plain');
+   if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      console.log(r)
+      res.send({
+        status: 'success'
+      })
+    }
+ })
+});
+
+app.get('/editState/log_em', function(req, res) {
+   console.log('in editState/log_em')
+   console.log(req.query);
+   var id_log = req.query.ID;
+   connection.query('select 수리상태 from 수리기록 WHERE 접수번호 = ?',[id_log], (e, r, f) => {
+   res.setHeader('Content-Type', 'text/plain');
+   if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      if(r[0].수리상태=='0') var state ='1'
+      else if(r[0].수리상태=='1') var state = '2'
+      connection.query('update 수리기록 set 수리상태=? WHERE 접수번호 = ?',[state,id_log], (e2, r2, f) => {
+      res.setHeader('Content-Type', 'text/plain');
+      if (e2) {
+         console.log(e2)
+         res.send({
+           status: 'error',
+           errMsg: '에러',
+         })
+       } else {
+         console.log(r2)
+         res.send({
+           status: 'success'
+         })
+       }
+    })
+    }
+ })
+});
+
+app.get('/editFinish/log_em', function(req, res) {
+   console.log('in editFinish/log_em')
+   console.log(req.query);
+   var id_log = req.query.ID;
+   var year = req.query.year;
+   var month = req.query.month;
+   var day = req.query.day;
+   var finish = year+'-'+month+'-'+day
+   connection.query('update 수리기록 set 수리완료날짜=? WHERE 접수번호 = ?',[finish,id_log], (e, r, f) => {
+   res.setHeader('Content-Type', 'text/plain');
+   if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      console.log(r)
+      res.send({
+        status: 'success'
       })
     }
  })
@@ -382,7 +511,7 @@ app.get('/receipt', function(req, res) {
   var newDate = new Date(); // 현재 시각 받아옴
   var time = newDate.toFormat('YYYY-MM-DD HH24:MI:SS');
 
-  connection.query('insert into 수리기록 (접수번호,접수시간,문제점,수리상태,직원번호,ID,차량번호) values (?,?,?,?,?,?,?)',[receipt_num,time,prob,0, em_id,id,num],(e,r,f) =>{
+  connection.query('insert into 수리기록 (접수번호,접수시간,문제점,수리상태,수리시작날짜,직원번호,ID,차량번호) values (?,?,?,?,?,?,?,?)',[receipt_num,time,prob,'0','2018-12-17', em_id,id,num],(e,r,f) =>{
      console.log(connection.query);
      res.setHeader('Content-Type', 'text/plain');
      if (e) {
@@ -512,6 +641,30 @@ app.get('/request/reservation', function(req, res) {
 
     reserv_num = reserv_num+1;
 });
+
+app.get('/request/comment', function(req, res) { //게시글 등록
+   var newDate = new Date(); // 현재 시각 받아옴
+   var time = newDate.toFormat('YYYY-MM-DD HH24:MI:SS');
+   console.log(req.query);
+   var context = req.query.내용,
+       id = req.query.직원번호;
+       num = req.query.질문번호;
+   connection.query('insert into 답변댓글 values (?,?,?,?)',[context,time,num,id],(e,r,f) =>{
+        res.setHeader('Content-Type', 'text/plain');
+            if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      res.send({
+        status: 'success'
+      })
+   }
+  })
+});
+
 
 app.get('/delete/reservation', function(req, res) {
   console.log('in /delete/reservation')
