@@ -17,8 +17,7 @@ import Receipt from '@/components/Receipt'
 import Car_info from '@/components/Car_info'
 import Comment from '@/components/Comment'
 import Log_em from '@/components/Log_em'
-
-
+import Comment_add from '@/components/Comment_add'
 Vue.use(Router)
 
 export default new Router({
@@ -92,6 +91,10 @@ export default new Router({
       path:'/log_em',
       name:'Log_em',
       component: Log_em
+    },{
+      path:'/comment_add',
+      name:'Comment_add',
+      component: Comment_add
     }
   ]
 })
