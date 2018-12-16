@@ -33,10 +33,8 @@
 </template>
 
 <script>
-
-<script>
   export default {
-    name: "log",
+    name: 'log',
     data() {
       return {
         msg: '게시판',

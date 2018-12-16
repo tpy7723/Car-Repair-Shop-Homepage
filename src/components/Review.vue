@@ -5,7 +5,7 @@
       <div class="row form-group">
         <div class="col-sm-10"></div>
         <div class="col-sm-2">
-          <button type="button" class="btn btn-secondary" @click="createLog()">글 등록</button>
+          <button v-show="isLogged" type="button" class="btn btn-secondary" @click="createLog()">글 등록</button>
         </div>
       </div>
       <div class="row">
@@ -42,6 +42,12 @@
         list: []
       }
     },
+    computed: {
+      isLogged () {
+        console.log(this.$store.getters.isLogged)
+        return this.$store.getters.isLogged
+      }
+    },
     mounted: function() {
       this.msg = ''
       console.log('후기게시판')
@@ -70,7 +76,15 @@
       },
       createLog: function() {
             this.$router.push("review_add")
-      }
+      },
+      readBoard: function(item){
+          this.$router.push({
+            name: 'review_detail',
+            query: {
+              id: item.ID
+            }
+          })
+        }
     }
   }
   </script>
