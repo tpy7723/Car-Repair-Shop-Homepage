@@ -1,5 +1,5 @@
 <template>
-<div class="review_add">
+<div class="quest_add">
   후기등록
   <div>
     <div class="board-box container">
@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       text_: '',
-      num:'20181033',
+      num:'20181033', // 이 ㄱㅓ 해결해야됨
       Log: this.$store.getters.isLogged,
       ID: this.$store.getters.getId
       //'hyunjung1228'
@@ -84,7 +84,7 @@ export default {
 </script>
 
 <style media="screen">
-.review_add {
+.quest_add {
   width: 100%;
   padding-top: 10px;
   margin-left: auto;
