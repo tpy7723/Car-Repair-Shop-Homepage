@@ -50,6 +50,9 @@ export default {
     },
     getAuthLevel() {
       return this.$store.getters.getAuthLevel
+    },
+    getId() {
+      return this.$store.getters.getId
     }
   },
   methods: {

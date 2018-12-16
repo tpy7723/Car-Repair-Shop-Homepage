@@ -17,6 +17,7 @@ app.use(cors());
 
 
 const router = express.Router();
+var receipt_num = 20181141;
 
 app.get('/login_em', function(req, res) {
   res.setHeader('Content-Type', 'text/plain');
@@ -324,6 +325,30 @@ app.get('/call/review_detail', function(req, res) {
  })
 });
 
+app.get('/delete/review', function(req, res) {
+  console.log('in /delete/review')
+  console.log(req.query);
+  var id_log = req.query.ID;
+
+  connection.query('delete from 후기 where 접수번호=?',id_log ,(e,r,f) => {
+     console.log(connection.query);
+     res.setHeader('Content-Type', 'text/plain');
+     if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      res.send({
+        status: 'success'
+      })
+   }
+  })
+});
+
+
+
 app.get('/delete/quesiton', function(req, res) {
   console.log('in /call/review_detail')
   console.log(req.query);
@@ -345,6 +370,35 @@ app.get('/delete/quesiton', function(req, res) {
    }
   })
 });
+
+app.get('/receipt', function(req, res) {
+  console.log('in /receipt')
+  console.log(req.query);
+  var id = req.query.id;
+  var em_id = req.query.em_id;
+  var num = req.query.차량번호;
+  var prob = req.query.문제점;
+  var newDate = new Date(); // 현재 시각 받아옴
+  var time = newDate.toFormat('YYYY-MM-DD HH24:MI:SS');
+
+  connection.query('insert into 수리기록 values (?,?,?,?,?,?,?,?,?)',[receipt_num,time,prob,0,'NULL','NULL', em_id,id,num],(e,r,f) =>{
+     console.log(connection.query);
+     res.setHeader('Content-Type', 'text/plain');
+     if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      res.send({
+        status: 'success'
+      })
+   }
+  })
+  receipt_num= receipt_num+1
+});
+
 
 app.get('/request/reservation', function(req, res) {
   res.send('Root');

@@ -14,6 +14,8 @@ import Join_em from '@/components/Join_em'
 import Log from '@/components/Log'
 import Review_detail from '@/components/Review_detail'
 import Receipt from '@/components/Receipt'
+import Car_info from '@/components/Car_info'
+
 
 Vue.use(Router)
 
@@ -76,6 +78,10 @@ export default new Router({
       path:'/receipt',
       name:'Receipt',
       component: Receipt
+    },{
+      path:'/car_info',
+      name:'Car_info',
+      component: Car_info
     }
   ]
 })

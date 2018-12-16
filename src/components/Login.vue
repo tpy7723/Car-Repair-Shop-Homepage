@@ -52,7 +52,7 @@ export default {
           console.log(data)
           this.$store.commit('logIn', {
               id: this.id,
-              authLevel: '1'
+              authLevel: '5'
           })
       },
       submit: function(){
