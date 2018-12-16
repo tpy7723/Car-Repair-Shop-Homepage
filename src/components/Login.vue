@@ -3,29 +3,30 @@
     <br><br>
     <h1 italic> 로그인 </h1>
     <br><br>
-    <div class="form-group">
-          <label for="id">회원 ID</label>
-          <input type="text" class="form-control" id="id"
-                 placeholder="ID" v-model="id">
+    <div v-if = "isLogged">
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>이미 로그인 되어있습니다!</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
     </div>
-    <div class="form-group">
-          <label for="password">비밀번호</label>
-          <input type="password" class="form-control" id="password"
-                 placeholder="Password" v-model="password">
+    <div v-else>
+      <div class="form-group">
+            <label for="id">회원 ID</label>
+            <input type="text" class="form-control" id="id"
+                   placeholder="ID" v-model="id">
+      </div>
+      <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" class="form-control" id="password"
+                   placeholder="Password" v-model="password">
+      </div>
+      <br>
+      <button class="btn btn-primary" @click.prevent="submit">Login</button>
     </div>
-    <br>
-    <button class="btn btn-primary" @click.prevent="submit">로그인</button>
-    <br>
-    <br>
-    <button type="button" class="btn btn-outline-primary btn-sm" style="padding:10px">
-      <router-link to="/join">회원가입</router-link>
-    </button>
   </div>
 </template>
-
-
-
-
 
 <script>
 export default {
@@ -34,14 +35,13 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App',
       id: '',
-      password: '',
-      name: '',
       password: ''
     }
   },
   computed: {
     isLogged () {
-        return this.$store.getters.isLogged
+      console.log(this.$store.getters.isLogged)
+      return this.$store.getters.isLogged
     }
   },
   methods: {
@@ -49,38 +49,25 @@ export default {
           console.log(data)
           this.$store.commit('logIn', {
               id: this.id,
-              password: this.password
+              authLevel: '1'
           })
       },
       submit: function(){
-          this.$http.get(this.$config.targetURL+`/login?id=${this.id}&password=${this.password}`)
+        var url =  'http://106.10.32.228:3000/login';
+          this.$http.get(url+`?id=${this.id}&password=${this.password}`)
           .then((result)=>{
               if(result.data.status == 'success'){ // 로그인 성공
                   console.log('success')
-                  if(result.data.token == 'email'){ // 이메일 인증이 아직 안된경우
-                      this.$router.push({
-                          name: 'EmailAuth',
-                          query: {
-                              id: this.id
-                          }
-                      })
-                  }
-                  else {
-                    console.log(result.data)
-                    this.logIn(result.data)
-                    this.$notice({
-                        type: 'success',
-                        text: '무사히 로그인 성공!',
-                    })
-                    this.$router.push("/")
-                  }
+                  var data = {id:result.data.result.ID}
+                  this.logIn(result.data)
+                  this.$router.push("/")
+              }
+              else if(result.data.status == 'no-user'){
+                console.log("no user")
+                alert('존재하지 않는 사용자입니다.')
               }
               else {
                 console.log('error')
-                    this.$notice({
-                        type: 'alert',
-                        text: '로그인 정보가 올바르지 않습니다'
-                    })
               }
             })
           .catch((error)=>{
@@ -90,9 +77,10 @@ export default {
                 text: '서버에 오류가 있습니다.'
             })
           })
-
+      },
+      goBack: function(){
+        this.$router.push("/")
       }
-
   }
 }
 </script>
