@@ -241,9 +241,34 @@ app.get('/log', function(req, res) {
  })
 });
 
+app.get('/call/review_detail', function(req, res) {
+  console.log('in /call/review_detail')
+  console.log(req.query);
+  var id_log = req.query.ID;
+  connection.query('SELECT 이름,문제점,수리시작날짜,수리완료날짜 from 수리기록 NATURAL JOIN 직원 WHERE ID = ?',id_log, (e, r, f) => {
+  res.setHeader('Content-Type', 'text/plain');
+  if (e) {
+     console.log(e)
+     res.send({
+       status: 'error',
+       errMsg: '에러',
+     })
+   } else {
+     console.log(r)
+     res.send({
+       status: 'success',
+       result: JSON.parse(JSON.stringify(r)),
+       fields: f
+     })
+   }
+ })
+});
+
+
 app.get('/request/reservation', function(req, res) {
   res.send('Root');
 });
+
 
 // configuration ===============================================================
 app.set('port', process.env.PORT || 3000);

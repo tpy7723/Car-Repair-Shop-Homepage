@@ -24,13 +24,16 @@
         <br/>
           <ul class="nav justify-content-center">
             <li class="nav-item" v-show="isLogged">
-              <a class="nav-link active"><router-link to="/reservation">예약하기</router-link></a>
+              <a class="nav-link active"><router-link to="/reservation">예약</router-link></a>
             </li>
             <li class="nav-item">
               <a class="nav-link"><router-link to="/question">질문게시판</router-link></a>
             </li>
             <li class="nav-item">
               <a class="nav-link"><router-link to="/review">후기게시판</router-link></a>
+            </li>
+            <li class="nav-item" v-show="isLogged">
+              <a class="nav-link"><router-link to="/log">수리기록</router-link></a>
             </li>
           </ul>
     </app-header>

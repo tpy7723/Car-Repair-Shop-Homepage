@@ -12,6 +12,7 @@ import Reserv_add from '@/components/Reserv_add'
 import Join from '@/components/Join'
 import Join_em from '@/components/Join_em'
 import Log from '@/components/Log'
+import Review_detail from '@/components/Review_detail'
 
 Vue.use(Router)
 
@@ -66,6 +67,10 @@ export default new Router({
       path:'/log',
       name:'Log',
       component: Log
+    },{
+      path:'/review_detail',
+      name:'Review_detail',
+      component: Review_detail
     }
   ]
 })
