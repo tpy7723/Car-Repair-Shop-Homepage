@@ -19,7 +19,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in list" @click="readBoard(item)" :key="index" style="cursor: pointer">
+            <tr v-for="(item, index) in list" :key="index" style="cursor: pointer">
               <td>{{item.접수번호}}</td>
               <td>{{item.내용}}</td>
               <td>{{item.수리시작날짜}}</td>
