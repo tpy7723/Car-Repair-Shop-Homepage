@@ -16,7 +16,7 @@ import Review_detail from '@/components/Review_detail'
 import Receipt from '@/components/Receipt'
 import Car_info from '@/components/Car_info'
 import Comment from '@/components/Comment'
-import Comment_add from '@/components/Comment_add'
+
 Vue.use(Router)
 
 export default new Router({
@@ -86,10 +86,6 @@ export default new Router({
       path:'/comment',
       name:'Comment',
       component: Comment
-    },{
-      path:'/comment_add',
-      name:'Comment_add',
-      component: Comment_add
     }
   ]
 })

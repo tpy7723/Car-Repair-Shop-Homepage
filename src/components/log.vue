@@ -55,6 +55,19 @@ export default {
       return this.$store.getters.isLogged
     },
     createLog: function(item) {
+      var url = 'http://106.10.32.228:3000/confirm/log'
+      console.log('confirm')
+      console.log(item.접수번호)
+      this.$http.get(url + `?NUM=${item.접수번호}`)
+        .then(result => {
+          console.log(result)
+          console.log(result.data.status)
+        })
+        .catch(error => {
+          console.log('서버에러')
+          console.log(error)
+        })
+      console.log(this.list)
       this.$router.push({
         name: 'Review_add',
         query: {
