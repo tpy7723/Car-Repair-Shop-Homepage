@@ -21,9 +21,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in list" @click="readBoard(item)" :key="index" style="cursor: pointer">
+            <tr v-for="(item, index) in list" :key="index" style="cursor: pointer">
               <td>{{item.접수번호}}</td>
-              <td>{{item.내용}}</td>
+              <td  @click="readBoard(item)" >{{item.내용}}</td>
               <td>{{item.작성시간}}</td>
               <td>{{item.ID}}</td>
               <td><button v-show="user_id == item.ID" type="button" class="btn btn-primary" @click="deleteReview(item)">삭제</button></td>
@@ -94,9 +94,9 @@
           })
         },
         deleteReview: function(item){
-          var url = 'http://106.10.32.228:3000/delete/quesiton'
+          var url = 'http://106.10.32.228:3000/delete/review'
           console.log(url)
-          this.$http.get(url+`?ID=${item.질문번호}`)
+          this.$http.get(url+`?ID=${item.접수번호}`)
             .then(result => {
               console.log(result)
               this.getData()
