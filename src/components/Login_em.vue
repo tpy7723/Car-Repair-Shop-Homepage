@@ -24,6 +24,9 @@
       </div>
       <br>
       <button class="btn btn-primary" @click.prevent="submit">로그인</button>
+      <button type="button" class="btn btn-outline-primary btn-sm" style="padding:10px;">
+        <router-link to="/join_em">회원가입</router-link>
+      </button>
     </div>
 
   </div>

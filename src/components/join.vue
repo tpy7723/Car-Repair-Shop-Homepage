@@ -1,14 +1,14 @@
 <template>
   <div class="join">
     <br><br>
-    <h1 italic> 회원가입 </h1>
+    <h1 italic> 고객 회원가입 </h1>
     <br><br>
 
     <form>
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="LoginID">ID</label>
-      <input type="text" class="form-control" v-model="LoginID">
+      <input type="text" class="form-control" v-model="LoginID" placeholder="LoginID">
     </div>
     <div class="form-group col-md-6">
       <label for="Password">Password</label>
@@ -18,11 +18,11 @@
   <div class="form-row">
   <div class="form-group col-md-6">
     <label for="Name">Name</label>
-    <input type="text" class="form-control" v-model="Name" placeholder="Name">
+    <input type="text" class="form-control" v-model="Name" placeholder="홍길동">
   </div>
   <div class="form-group col-md-6">
     <label for="Phone">Phone</label>
-    <input type="text" class="form-control" v-model="Phone" placeholder="Phone">
+    <input type="text" class="form-control" v-model="Phone" placeholder="010-3017-2440">
   </div>
   <br>
 </div>
