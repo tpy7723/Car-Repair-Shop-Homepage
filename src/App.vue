@@ -35,6 +35,12 @@
             <li class="nav-item" v-show="isLogged">
               <a class="nav-link"><router-link to="/log">수리기록</router-link></a>
             </li>
+            <li class="nav-item" v-show="getAuthLevel < 2">
+              <a class="nav-link"><router-link to="/log_em">총 수리기록</router-link></a>
+            </li>
+            <li class="nav-item" v-show="getAuthLevel < 2">
+              <a class="nav-link"><router-link to="/receipt">접수</router-link></a>
+            </li>
           </ul>
     </app-header>
     <div class="footer">
@@ -56,6 +62,9 @@ export default {
     isLogged () {
       console.log(this.$store.getters.isLogged)
       return this.$store.getters.isLogged
+    },
+    getAuthLevel() {
+      return this.$store.getters.getAuthLevel
     }
   },
   methods: {

@@ -15,6 +15,7 @@
               <th class="text-center">수리시작날짜</th>
               <th class="text-center">수리완료날짜</th>
               <th class="text-center">직원번호</th>
+              <th class="text-center"></th>
             </tr>
           </thead>
           <tbody>
@@ -24,6 +25,7 @@
               <td>{{item.수리시작날짜}}</td>
               <td>{{item.수리완료날짜}}</td>
               <td>{{item.직원번호}}</td>
+              <td><button type="button" class="btn btn-primary" @click="review(item)">삭제</button></td>
             </tr>
           </tbody>
         </table>
