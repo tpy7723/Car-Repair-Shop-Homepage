@@ -44,7 +44,6 @@ export default {
     return {
       list: [],
       msg: 'Welcome to Your Vue.js App',
-      id: this.$store.getters.getId,
       sql_r: 'success'
 
     }
@@ -74,7 +73,7 @@ export default {
       getData: function(){
         var url = 'http://106.10.32.228:3000/call/reservation'
         console.log(url)
-        this.$http.get(url+`?ID=${this.id}`)
+        this.$http.get(url+`?ID=${this.getId}`)
           .then(result => {
             console.log(result)
             console.log(result.data.status)

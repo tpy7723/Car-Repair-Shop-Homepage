@@ -10,10 +10,13 @@ import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueSocketio from 'vue-socket.io'
+import VModal from 'vue-js-modal'
 
 Vue.config.productionTip = false
 
 Vue.use(BootstrapVue)
+Vue.use(VModal)
+
 Vue.prototype.$http=axios
 /* eslint-disable no-new */
 new Vue({

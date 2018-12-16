@@ -79,7 +79,7 @@
       },
       readBoard: function(item){
           this.$router.push({
-            name: 'review_detail',
+            name: 'Review_detail',
             query: {
               id: item.ID
             }

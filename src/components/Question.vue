@@ -17,14 +17,16 @@
             <th class="text-center">내용</th>
             <th class="text-center">작성시간</th>
             <th class="text-center">고객ID</th>
+            <th class="text-center"></th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in list" @click="readBoard(item)" :key="index" style="cursor: pointer">
+          <tr v-for="(item, index) in list" :key="index" style="cursor: pointer">
             <td>{{item.질문번호}}</td>
             <td>{{item.내용}}</td>
             <td>{{item.작성시간}}</td>
             <td>{{item.ID}}</td>
+            <td><button v-show="user_id == item.ID" type="button" class="btn btn-primary" @click="deleteQuestion(item)">삭제</button></td>
           </tr>
         </tbody>
       </table>
@@ -39,7 +41,18 @@
     data() {
       return {
         msg: '게시판',
-        list: []
+        list: [],
+        time: 0,
+        duration: 5000
+      }
+    },
+    computed: {
+      isLogged () {
+        console.log(this.$store.getters.isLogged)
+        return this.$store.getters.isLogged
+      },
+      user_id() {
+        return this.$store.getters.getId
       }
     },
     mounted: function() {
@@ -47,7 +60,6 @@
       console.log('질문게시판')
       this.getData()
     },
-
     methods: {
       getData: function() {
         var url = 'http://106.10.32.228:3000/call/question'
@@ -70,8 +82,20 @@
       },
       createLog: function() {
             this.$router.push("quest_add")
+      },
+      deleteQuestion: function(item) {
+        var url = 'http://106.10.32.228:3000/delete/Quesiton'
+        console.log(url)
+        this.$http.get(url+`?id=${item.질문번호}`)
+          .then(result => {
+            console.log(result)
+            this.getData()
+          })
+          .catch(error => {
+            console.log('서버에러')
+            console.log(error)
+          })
       }
-
     }
   }
   </script>
