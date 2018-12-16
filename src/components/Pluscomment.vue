@@ -1,37 +1,26 @@
 <template>
 <div class="pluscomment">
-  댓글 달리지 않은 게시글
-  <div class="board-box">
-    <div class="row form-group">
-      <div class="col-sm-10"></div>
-      <div class="col-sm-2">
-        <button v-show="isLogged" type="button" class="btn btn-secondary" @click="createLog()">글 등록</button>
+  댓글 다는 곳
+
+    <br><br><br>
+      <div class="card" style="width: 50rem;" >
+        <div class="card-body">
+          <h1 class="card-title">{{this.num}}번 질문게시글</h1>
+        </div>
+        <ul class="list-group list-group-flush" >
+          <li class="list-group-item">작성시간 :<br/>{{this.time}}</li>
+          <li class="list-group-item">질문작성자 : {{this.id}}</li><!--직원과 join해서 직원의 이름을 보여줘야 한다.-->
+          <li class="list-group-item">질문내용 : {{this.context}}</li><!--수리 비용까지 sql에서 넘겨줘야한다.-->
+          <li class="list-group-item">댓글 : {{ this.list[0].내용  }}</li><!--수리 비용까지 sql에서 넘겨줘야한다.-->
+          <li class="list-group-item">댓글작성시간 : {{ this.list[0].작성시간  }}</li>
+          <li class="list-group-item">댓글작성자 : {{ this.list[0].이름  }}</li>
+        </ul>
       </div>
-    </div>
-    <div class="row">
-      <!-- print meeting log list -->
-      <table class="table table-striped">
-        <thead>
-          <tr class="text-center">
-            <th class="text-center">질문번호</th>
-            <th class="text-center">내용</th>
-            <th class="text-center">작성시간</th>
-            <th class="text-center">고객ID</th>
-            <th class="text-center"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in list" :key="index" style="cursor: pointer">
-            <td>{{item.질문번호}}</td>
-            <td>{{item.내용}}</td>
-            <td>{{item.작성시간}}</td>
-            <td>{{item.ID}}</td>
-            <td><button type="button" class="btn btn-primary" @click="Add_comment(item)">댓글 달기</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      <br><br><br>
+            <button type="button" class="btn btn-outline-primary" @click.prevent="goBack()">뒤로가기</button>
+      <div >
   </div>
+
 </div>
 </template>
 
@@ -42,8 +31,9 @@
       return {
         msg: '게시판',
         list: [],
-        time: 0,
-        duration: 5000
+        num: '',
+        context: '',
+        내용:''
       }
     },
     computed: {
@@ -61,44 +51,39 @@
       this.getData()
     },
     methods: {
-      Add_comment: function(item) {
-        this.$router.push({
-          name: 'Comment_add',
-          query: {
-            num: item.질문번호
-          }
-        })
+      goBack: function() {
+        this.$router.push("question")
       },
       getData: function() {
-        var url = 'http://106.10.32.228:3000/call/notcommentedquestion'
+        this.num = this.$route.query.num
+        this.id = this.$route.query.id
+        this.context = this.$route.query.context
+        this.time = this.$route.query.time
+        console.log(this.num)
+        var url = 'http://106.10.32.228:3000'+`/call/comment?질문번호=${this.num}`;
         console.log(url)
         this.$http.get(url)
           .then(result => {
             console.log(result)
             console.log(result.data.status)
             this.list = result.data.result
-            console.log(this.list)
-            this.list.forEach(v => {
-              var datainfo = v.작성시간
-              v.작성시간 = this.$moment(dateinfo).tz('Asia/Seoul').format('YYYY년 M월 D일 H시 m분')
-            })
           })
           .catch(error => {
             console.log('서버에러')
             console.log(error)
           })
+
       },
     }
   }
   </script>
 
 
-<style media="screen">
-.login{
-  width: 25%;
-  padding-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align : center;
-}
-</style>
+  <style media="screen">
+  .card {
+    padding-top: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    text-ailgn : left;
+  }
+  </style>

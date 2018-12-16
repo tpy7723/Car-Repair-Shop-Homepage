@@ -23,7 +23,7 @@
         <tbody>
           <tr v-for="(item, index) in list" :key="index" style="cursor: pointer">
             <td>{{item.질문번호}}</td>
-            <td>{{item.내용}}</td>
+            <td  @click="goQuestion(item)" >{{item.내용}}</td>
             <td>{{item.작성시간}}</td>
             <td>{{item.ID}}</td>
             <td><button v-show="user_id == item.ID" type="button" class="btn btn-primary" @click="deleteQuestion(item)">삭제</button></td>
@@ -61,6 +61,19 @@
       this.getData()
     },
     methods: {
+      goQuestion: function(item) {
+        this.$router.push("pluscomment")
+        console.log(item)
+          this.$router.push({
+            name: 'Pluscomment',
+            query: {
+              id : item.ID,
+              context: item.내용,
+              num: item.질문번호,
+              time: item.작성시간
+            }
+          })
+      },
       getData: function() {
         var url = 'http://106.10.32.228:3000/call/question'
         console.log(url)
