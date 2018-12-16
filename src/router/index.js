@@ -18,6 +18,7 @@ import Car_info from '@/components/Car_info'
 import Comment from '@/components/Comment'
 import Log_em from '@/components/Log_em'
 import Comment_add from '@/components/Comment_add'
+import Pluscomment from '@/components/Pluscomment'
 Vue.use(Router)
 
 export default new Router({
@@ -95,6 +96,10 @@ export default new Router({
       path:'/comment_add',
       name:'Comment_add',
       component: Comment_add
+    },{
+      path:'/pluscomment',
+      name:'Pluscomment',
+      component: Pluscomment
     }
   ]
 })
