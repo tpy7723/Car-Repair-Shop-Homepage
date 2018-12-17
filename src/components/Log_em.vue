@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="log_em">
-    {{this.id}}고객님의 수리기록
+    {{getId}}직원의 수리기록
     <div class="board-box">
       <div class="row form-group">
         <div class="col-sm-10"></div>
@@ -15,6 +15,7 @@
               <th class="text-center">수리시작날짜</th>
               <th class="text-center">수리완료날짜</th>
               <th class="text-center">수리상태</th>
+              <th class="text-center">금액</th>
             </tr>
           </thead>
           <tbody>
@@ -24,18 +25,34 @@
               <td>{{item.수리시작날짜}}<button type="button" class="btn btn-primary" @click="editStart(item)">갱신</button></td>
               <td>{{item.수리완료날짜}}</td>
               <td>{{item.수리상태}}<button type="button" class="btn btn-primary" @click="editState(item)">갱신</button></td>
-            </tr>
-            수리상태 : 수리 전=0, 수리 중=1, 수리 완료=2
-            <tr>
-              수리완료날짜 갱신하기
-              <td>접수번호:<input id="edit" type="text" class="form-control" v-model="log_id"></td>
-              <td><input id="edit" type="text" class="form-control" v-model="year">년</td>
-              <td><input id="edit" type="text" class="form-control" v-model="month">월</td>
-              <td><input id="edit" type="text" class="form-control" v-model="day">일</td>
-              <td><button type="button" class="btn btn-primary" @click="editFinish()">갱신</button></td>
+              <td>{{item.금액}}</td>
             </tr>
           </tbody>
         </table>
+      </br>
+        수리상태 : 수리 전=0, 수리 중=1, 수리 완료=2
+        <table class="table table-striped">
+            <tbody>
+              <tr>
+                수리완료날짜 갱신하기
+                <td>접수번호:<input id="edit" type="text" class="form-control" v-model="log_id"></td>
+                <td><input id="edit" type="text" class="form-control" v-model="year">년</td>
+                <td><input id="edit" type="text" class="form-control" v-model="month">월</td>
+                <td><input id="edit" type="text" class="form-control" v-model="day">일</td>
+                <td><button type="button" class="btn btn-primary" @click="editFinish()">갱신</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </br>
+          가격 갱신하기
+          <table class="table table-striped">
+            <tbody>
+              <tr>
+                <td>가격 : <input id="edit" type="text" class="form-control" v-model="pay"></td>
+                <td>접수번호:<input id="edit" type="text" class="form-control" v-model="log_id"></td>
+                <td><button type="button" class="btn btn-primary" @click="editPay()">갱신</button></td>
+              </tr>
+            </tbody>
         </table>
       </div>
     </div>
@@ -54,7 +71,8 @@ export default {
       year:'',
       month:'',
       day:'',
-      log_id:''
+      log_id:'',
+      pay:''
     }
   },
   mounted: function() {
@@ -133,12 +151,25 @@ export default {
             var datainfo = v.수리완료날짜
             v.수리완료날짜 = this.$moment(dateinfo).tz('Asia/Seoul').format('YYYY년 M월 D일 H시 m분')
           })
+          this.getData()
         })
         .catch(error => {
           console.log('서버에러')
           console.log(error)
         })
-        this.getData()
+    },
+    editPay: function(){
+      var url = 'http://106.10.32.228:3000/editPay/log_em'
+      this.$http.put(url + `?val=${this.pay}&num=${this.log_id}`)
+        .then(result => {
+          console.log(result)
+          console.log(result.data.status)
+          this.getData()
+        })
+        .catch(error => {
+          console.log('서버에러')
+          console.log(error)
+        })
     }
 
   }

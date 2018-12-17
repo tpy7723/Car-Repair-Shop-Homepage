@@ -17,22 +17,24 @@
               <th class="text-center">수리상태</th>
               <th class="text-center">직원번호</th>
               <th class="text-center">차량번호</th>
+              <th class="text-center">금액</th>
               <th class="text-center"></th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in list" :key="index" style="cursor: pointer">
-              <td>{{item.접수번호}}</td>
-              <td>{{item.문제점}}</td>
+            <tr v-for="(item, index) in list" :key="index" >
+              <td @click="detailLog(item)" style="cursor: pointer">{{item.접수번호}}</td>
+              <td @click="detailLog(item)" style="cursor: pointer">{{item.문제점}}</td>
               <td>{{item.수리시작날짜}}</td>
               <td>{{item.수리완료날짜}}</td>
-              <td>{{item.수리상태}}</td>
+              <td @click="detailLog(item)" style="cursor: pointer">{{item.수리상태}}</td>
               <td>{{item.직원번호}}</td>
               <td>{{item.차량번호}}</td>
+              <td>{{item.금액}}</td>
               <td><button type="button" class="btn btn-primary" @click="createLog(item)">후기 등록</button></td>
             </tr>
-            수리상태 : 수리 전=0, 수리 중=1, 수리 완료=2
           </tbody>
+          수리상태 : 수리 전=0, 수리 중=1, 수리 완료=2
         </table>
       </div>
     </div>
@@ -92,6 +94,14 @@ export default {
           console.log('서버에러')
           console.log(error)
         })
+    },
+    detailLog: function(item){
+      this.$router.push({
+        name: 'Review_add',
+        query: {
+          num: item.접수번호
+        }
+      })
     }
   }
 }

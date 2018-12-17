@@ -379,7 +379,29 @@ app.get('/log', function(req, res) {
    console.log('in log')
    console.log(req.query);
    var id_log = req.query.ID;
-   connection.query('SELECT 접수번호,문제점,수리상태,수리시작날짜,수리완료날짜,직원번호,차량번호 from 수리기록 WHERE ID = ?',id_log, (e, r, f) => {
+   connection.query('SELECT 접수번호,문제점,금액,수리상태,수리시작날짜,수리완료날짜,직원번호,차량번호 from 수리기록 WHERE ID = ?',id_log, (e, r, f) => {
+   res.setHeader('Content-Type', 'text/plain');
+   if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      res.send({
+        status: 'success',
+        result: JSON.parse(JSON.stringify(r)),
+        fields: f
+      })
+    }
+ })
+});
+
+app.get('/detail/log', function(req, res) {
+   console.log('in detial/log')
+   console.log(req.query);
+   var ID = req.query.ID;
+   connection.query('SELECT 모델번호,부품명,시리얼번호 from 사용부품 NATURAL JOIN 부품 WHERE 접수번호 = ?',ID, (e, r, f) => {
    res.setHeader('Content-Type', 'text/plain');
    if (e) {
       console.log(e)
@@ -401,7 +423,7 @@ app.get('/log_em', function(req, res) {
    console.log('in log')
    console.log(req.query);
    var id_log = req.query.ID;
-   connection.query('SELECT 접수번호,문제점,수리상태,수리시작날짜,수리완료날짜,차량번호 from 수리기록 WHERE 직원번호 = ?',id_log, (e, r, f) => {
+   connection.query('SELECT 접수번호,문제점,수리상태,금액,수리시작날짜,수리완료날짜,차량번호 from 수리기록 WHERE 직원번호 = ?',id_log, (e, r, f) => {
    res.setHeader('Content-Type', 'text/plain');
    if (e) {
       console.log(e)
@@ -484,6 +506,27 @@ app.get('/editFinish/log_em', function(req, res) {
    var day = req.query.day;
    var finish = year+'-'+month+'-'+day
    connection.query('update 수리기록 set 수리완료날짜=? WHERE 접수번호 = ?',[finish,id_log], (e, r, f) => {
+   res.setHeader('Content-Type', 'text/plain');
+   if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      res.send({
+        status: 'success'
+      })
+    }
+ })
+});
+
+app.put('/editPay/log_em', function(req, res) {
+   console.log('in editPay/log_em')
+   console.log(req.query)
+   var id_log = req.query.num
+   var val = req.query.val
+   connection.query('update 수리기록 set 금액=? WHERE 접수번호 = ?',[val,id_log], (e, r, f) => {
    res.setHeader('Content-Type', 'text/plain');
    if (e) {
       console.log(e)
