@@ -1,6 +1,10 @@
 <template lang="html">
   <div class="log">
-    {{this.id}}고객님의 수리기록
+    <br><br>
+    <h1 italic> 고객님의 수리기록 </h1>
+    <h5 italic> (수리상태 : 수리 전=0, 수리 중=1, 수리 완료=2) </h5>
+    <br><br>
+  
     <div class="board-box">
       <div class="row form-group">
         <div class="col-sm-10"></div>
@@ -34,7 +38,7 @@
               <td><button type="button" class="btn btn-primary" @click="createLog(item)">후기 등록</button></td>
             </tr>
           </tbody>
-          수리상태 : 수리 전=0, 수리 중=1, 수리 완료=2
+
         </table>
       </div>
     </div>
@@ -111,8 +115,6 @@ export default {
 .log {
   width: 100%;
   padding-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
   text-align: center;
 }
 </style>

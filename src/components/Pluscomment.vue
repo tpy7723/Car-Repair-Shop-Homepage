@@ -1,9 +1,6 @@
 <template>
 <div class="pluscomment">
-  댓글 다는 곳
-
-    <br><br><br>
-      <div class="card" style="width: 50rem;" >
+      <div class="card" style="width: 40rem;" >
         <div class="card-body">
           <h1 class="card-title"><{{this.num}}번 질문게시글></h1>
         </div>
@@ -18,11 +15,12 @@
           <li class="list-group-item"><h4>댓글작성자</h4>  {{ this.list[0].이름  }}</li>
 
         </ul>
+        <br>
+        <button type="button" class="btn btn-outline-primary" @click.prevent="goBack()">뒤로가기</button>
+        <br><br><br>.
       </div>
-      <br><br><br>
-            <button type="button" class="btn btn-outline-primary" @click.prevent="goBack()">뒤로가기</button>
-      <div >
-  </div>
+      <br>
+      <br>
 
 </div>
 </template>

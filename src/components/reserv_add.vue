@@ -1,12 +1,17 @@
 <template>
   <body>
   <div class="reserv_add">
-    <h1 italic> 원하는 예약 날짜를 입력하세요 </h1>
-    이번달의 예약만 신청 가능합니다.
+    <br><br>
+    <h1 italic> 예약 등록 </h1>
+    <br>
+    (해당 달의 예약만 신청 가능합니다!)<br><br>
+  희망 일자 입력
+  <input type="text" class="form-control" v-model="day" placeholder="1~31일 중 숫자만 입력해주세요">
   <br/>
-  <input type="text" class="form-control" v-model="day" placeholder="1">일
-  <br/>
-  <input type="text" class="form-control" v-model="loc" placeholder="픽업의 경우 원하는 장소를 적어주세요">
+  희망 픽업 장소
+  <input type="text" class="form-control" v-model="loc" placeholder="희망 픽업 장소의 주소를 입력해주세요">
+  <br>
+  <button type="submit" class="btn btn-primary" @click.prevent="goBack">       뒤로가기       </button>
   <button type="submit" class="btn btn-primary" @click.prevent="submitLog">예약</button>
 </div>
 </body>

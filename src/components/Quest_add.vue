@@ -1,6 +1,8 @@
 <template>
 <div class="quest_add">
-  질문등록
+  <br><br>
+  <h1 italic> 질문 등록 </h1>
+  <br><br>
   <div>
     <div class="board-box container">
       <button type="button" class="btn btn-outline-primary" style="float:right" @click.prevent="submitLog">등록</button>

@@ -1,6 +1,9 @@
 <template lang="html">
   <div class="log_em">
-    {{getId}}직원의 수리기록
+    <br><br>
+    <h1 italic> 직원의 수리기록 </h1>
+    <h5 italic> (수리상태 : 수리 전=0, 수리 중=1, 수리 완료=2) </h5>
+    <br><br>
     <div class="board-box">
       <div class="row form-group">
         <div class="col-sm-10"></div>
@@ -30,11 +33,11 @@
           </tbody>
         </table>
       </br>
-        수리상태 : 수리 전=0, 수리 중=1, 수리 완료=2
+      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         <table class="table table-striped">
+          <h5 italic> 수리완료날짜 갱신하기 </h5>
             <tbody>
               <tr>
-                수리완료날짜 갱신하기
                 <td>접수번호:<input id="edit" type="text" class="form-control" v-model="log_id"></td>
                 <td><input id="edit" type="text" class="form-control" v-model="year">년</td>
                 <td><input id="edit" type="text" class="form-control" v-model="month">월</td>
@@ -58,6 +61,7 @@
     </div>
     <br/>
     <br/>
+    <br><br><br> .
   </div>
 </template>
 

@@ -1,6 +1,8 @@
 <template>
   <div class="review">
-    후기게시판
+    <br><br>
+    <h1 italic> 후기 게시판 </h1>
+    <br><br>
     <div class="board-box">
       <div class="row form-group">
         <div class="col-sm-10"></div>
@@ -27,6 +29,7 @@
             </tr>
           </tbody>
         </table>
+        <br><br><br>.
       </div>
     </div>
   </div>
