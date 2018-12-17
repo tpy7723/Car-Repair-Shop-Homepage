@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     goBack: function() {
-      this.$router.push("/")
+      this.$router.push("/login_em")
     },
     logIn(data) {
       console.log(data)
@@ -107,6 +107,7 @@ export default {
             this.$router.push("/")
           }else {
             console.log('error')
+            alert("중복된 데이터가 있습니다!");
             this.$notice({
               type: 'alert',
               text: '로그인 정보가 올바르지 않습니다'

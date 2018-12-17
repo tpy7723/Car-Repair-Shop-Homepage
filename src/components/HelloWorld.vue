@@ -4,9 +4,9 @@
       <div class = "main">
         <p><img src="./car.png" width="150px" height="150px" ><p/>
         <br>
-        <h3 style='color : red'>{{this.ID}}</h3>
+        <h3 style='color : red' v-show="isLogged">{{this.ID}}</h3>
         <br>
-        <h3 >안녕하세요~</h3>
+        <h3 v-show="isLogged">안녕하세요~</h3>
 
       </div>
     </body>
