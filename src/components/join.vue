@@ -4,25 +4,25 @@
     <h1 italic> 고객 회원가입 </h1>
     <br><br>
 
-    <form>
+    <form name="registerForm" action="register_ok.asp" method="post">
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="LoginID">ID</label>
-      <input type="text" class="form-control" v-model="LoginID" placeholder="LoginID">
+      <input type="text" class="form-control" id='LoginID' v-model="LoginID" placeholder="LoginID">
     </div>
     <div class="form-group col-md-6">
       <label for="Password">Password</label>
-      <input type="password" class="form-control" v-model="Password" placeholder="Password">
+      <input type="password" class="form-control" id='password' v-model="Password" placeholder="Password">
     </div>
   </div>
   <div class="form-row">
   <div class="form-group col-md-6">
     <label for="Name">Name</label>
-    <input type="text" class="form-control" v-model="Name" placeholder="홍길동">
+    <input type="text" class="form-control" id='name' v-model="Name" placeholder="홍길동">
   </div>
   <div class="form-group col-md-6">
     <label for="Phone">Phone</label>
-    <input type="text" class="form-control" v-model="Phone" placeholder="010-3017-2440">
+    <input type="text" class="form-control" id='phone' v-model="Phone" placeholder="010-3017-2440">
   </div>
   <br>
 </div>
@@ -58,6 +58,20 @@ export default {
           })
       },
       submit: function(){
+        var regex;
+        var LoginID = registerForm.LoginID.value;
+        var password= registerForm.password.value;
+        var name = registerForm.name.value;
+        var phone= registerForm.phone.value;
+        if(LoginID==""){alert("ID를 입력해주세요"); return;}
+        if(password==""){alert("Password를 입력해주세요"); return;}
+        if(name==""){alert("Name을 입력해주세요"); return;}
+        if(phone==""){alert("Phone을 입력해주세요"); return;}
+        regex=/^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
+        if(regex.test(phone)===false) {
+          alert("잘못된 전화번호입니다.");
+          return;
+        }
           var url = 'http://106.10.32.228:3000' + `/request/join?ID=${this.LoginID}&PHONE=${this.Phone}&NAME=${this.Name}&PASSWORD=${this.Password}`;
           console.log(url)
           this.$http.get(url)

@@ -5,15 +5,18 @@
     <br><br><br>
       <div class="card" style="width: 50rem;" >
         <div class="card-body">
-          <h1 class="card-title">{{this.num}}번 질문게시글</h1>
+          <h1 class="card-title"><{{this.num}}번 질문게시글></h1>
         </div>
-        <ul class="list-group list-group-flush" >
-          <li class="list-group-item">작성시간 :<br/>{{this.time}}</li>
-          <li class="list-group-item">질문작성자 : {{this.id}}</li><!--직원과 join해서 직원의 이름을 보여줘야 한다.-->
-          <li class="list-group-item">질문내용 : {{this.context}}</li><!--수리 비용까지 sql에서 넘겨줘야한다.-->
-          <li class="list-group-item">댓글 : {{ this.list[0].내용  }}</li><!--수리 비용까지 sql에서 넘겨줘야한다.-->
-          <li class="list-group-item">댓글작성시간 : {{ this.list[0].작성시간  }}</li>
-          <li class="list-group-item">댓글작성자 : {{ this.list[0].이름  }}</li>
+        <ul class="list-group list-group-flush text-left" >
+          <li class="list-group-item"><h4>작성시간</h4>  {{this.time}}</li>
+          <li class="list-group-item"><h4>질문내용</h4>  {{this.context}}</li><!--수리 비용까지 sql에서 넘겨줘야한다.-->
+          <li class="list-group-item"><h4>질문작성자</h4>  {{this.id}}</li><!--직원과 join해서 직원의 이름을 보여줘야 한다.-->
+          <li class="list-group-item">
+          <li class="list-group-item">
+          <li class="list-group-item"><h4>댓글</h4>  {{ this.list[0].내용  }}</li><!--수리 비용까지 sql에서 넘겨줘야한다.-->
+          <li class="list-group-item"><h4>댓글작성시간</h4>  {{ this.list[0].작성시간  }}</li>
+          <li class="list-group-item"><h4>댓글작성자</h4>  {{ this.list[0].이름  }}</li>
+
         </ul>
       </div>
       <br><br><br>
@@ -81,9 +84,9 @@
 
   <style media="screen">
   .card {
-    padding-top: 80px;
+    padding: 80px;
     margin-left: auto;
     margin-right: auto;
-    text-ailgn : left;
+    text-ailgn : 'left';
   }
   </style>

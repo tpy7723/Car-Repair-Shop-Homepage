@@ -12,6 +12,7 @@
       </div>
     </div>
     <div v-else>
+      <form name="registerForm" action="register_ok.asp" method="post">
       <div class="form-group">
             <label for="id">회원 ID</label>
             <input type="text" class="form-control" id="id"
@@ -27,7 +28,8 @@
       <button type="button" class="btn btn-outline-primary btn-sm" style="padding:10px;">
         <router-link to="/join">회원가입</router-link>
       </button>
-    </div>
+      </form>
+  </div>
   </div>
 </template>
 
@@ -56,6 +58,11 @@ export default {
           })
       },
       submit: function(){
+        var id = registerForm.id.value;
+        var password= registerForm.password.value;
+        if(id==""){alert("회원 ID를 입력해주세요"); return;}
+        if(password==""){alert("비밀번호를 입력해주세요"); return;}
+
         var url =  'http://106.10.32.228:3000/login';
           this.$http.get(url+`?id=${this.id}&password=${this.password}`)
           .then((result)=>{
@@ -86,6 +93,7 @@ export default {
       }
   }
 }
+
 </script>
 
 
