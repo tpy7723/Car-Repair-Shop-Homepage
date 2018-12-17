@@ -112,6 +112,10 @@ export default new Router({
       path:'/log_detail',
       name:'Log_detail',
       component: Log_detail
+    },{
+      path:'/reserv_add',
+      name:'Reserv_add',
+      component: Reserv_add
     }
   ]
 })
