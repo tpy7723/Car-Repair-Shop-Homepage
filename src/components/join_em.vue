@@ -75,11 +75,12 @@ export default {
       console.log(url)
       this.$http.get(url)
 
+
         .then((result) => {
           if (result.data.status == 'success') { // 로그인 성공
             console.log('success')
             this.$router.push("/")
-          } else {
+          }else {
             console.log('error')
             this.$notice({
               type: 'alert',

@@ -61,8 +61,10 @@ export default {
           .then((result)=>{
               if(result.data.status == 'success'){ // 로그인 성공
                   console.log('success')
-              }
-              else {
+              }else if(result.data.status == '거절'){
+                  console.log('거절')
+                  alert('인턴은 접수를 해 줄 수 없습니다!')
+              }else {
                 console.log('error')
                     this.$notice({
                         type: 'alert',
@@ -71,7 +73,7 @@ export default {
               }
             })
           .catch((error)=>{
-            console.log('server success')
+            console.log('error')
             this.$notice({
                 type: 'alert',
                 text: '서버에 오류가 있습니다.'
