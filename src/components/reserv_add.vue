@@ -58,8 +58,10 @@ export default {
           .then((result) => {
             if (result.data.status == 'success') {
               console.log('success')
+              alert("등록 성공하였습니다")
               this.$router.push("reservation")
             } else {
+              alert("등록 실패하였습니다")
               console.log('error')
             }
           })

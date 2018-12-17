@@ -1,6 +1,8 @@
 <template>
 <div class="comment_add">
-  답변댓글
+  <br><br>
+  <h1 italic> 답변 댓글 </h1>
+  <br><br>
   <div>
     <div class="board-box container">
       <button type="button" class="btn btn-outline-primary" style="float:right" @click.prevent="submitLog">등록</button>
@@ -68,10 +70,11 @@ export default {
         .then((result) => {
           if (result.data.status == 'success') {
             console.log('success')
+            alert("등록 성공하였습니다")
             this.$router.push("comment")
           } else {
             console.log('error')
-
+            alert("등록 실패하였습니다")
           }
 
         })

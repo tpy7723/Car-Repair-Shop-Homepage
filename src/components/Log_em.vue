@@ -3,12 +3,12 @@
     <br><br>
     <h1 italic> 직원의 수리기록 </h1>
     <h5 italic> (수리상태 : 수리 전=0, 수리 중=1, 수리 완료=2) </h5>
-    <br><br>
-    <div class="board-box">
+
+    <div class="log_em">
       <div class="row form-group">
         <div class="col-sm-10"></div>
       </div>
-      <div class="row">
+      <div class="log_em">
         <!-- print meeting log list -->
         <table class="table table-striped">
           <thead>
@@ -34,29 +34,35 @@
         </table>
       </br>
       <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+      <form name="registerForm">
+                <h2 class="log_em" italic> <수리완료 날짜 갱신> </h2>
         <table class="table table-striped">
-          <h5 italic> 수리완료날짜 갱신하기 </h5>
             <tbody>
               <tr>
-                <td>접수번호:<input id="edit" type="text" class="form-control" v-model="log_id"></td>
-                <td><input id="edit" type="text" class="form-control" v-model="year">년</td>
-                <td><input id="edit" type="text" class="form-control" v-model="month">월</td>
-                <td><input id="edit" type="text" class="form-control" v-model="day">일</td>
-                <td><button type="button" class="btn btn-primary" @click="editFinish()">갱신</button></td>
+                <td>접수번호<input id="num" type="text" class="form-control" v-model="log_id"></td>
+                <td>년<input id="year" type="text" class="form-control" v-model="year"></td>
+                <td>월<input id="month" type="text" class="form-control" v-model="month"></td>
+                <td>일<input id="date" type="text" class="form-control" v-model="day"></td>
               </tr>
             </tbody>
+
           </table>
+          <button type="button" class="btn btn-primary" @click="editFinish()">갱신</button>
+        </form>
         </br>
-          가격 갱신하기
+        <form name="registerForm2">
+          <h2 class="log_em" italic> <가격 갱신> </h2>
           <table class="table table-striped">
             <tbody>
               <tr>
-                <td>가격 : <input id="edit" type="text" class="form-control" v-model="pay"></td>
-                <td>접수번호:<input id="edit" type="text" class="form-control" v-model="log_id"></td>
-                <td><button type="button" class="btn btn-primary" @click="editPay()">갱신</button></td>
+                <td>접수번호<input id="register" type="text" class="form-control" v-model="log_id"></td>
+                <td>가격 <input id="money" type="text" class="form-control" v-model="pay"></td>
+
               </tr>
             </tbody>
         </table>
+        <button type="button" class="btn btn-primary" @click="editPay()">갱신</button>
+      </form>
       </div>
     </div>
     <br/>
@@ -142,6 +148,18 @@ export default {
         this.getData()
     },
     editFinish: function(){
+      var num = registerForm.num.value;
+      var year = registerForm.year.value;
+      var month = registerForm.month.value;
+      var date = registerForm.date.value;
+
+
+      if(num==""){alert("접수번호를 입력해주세요"); return;}
+      if(year==""){alert("연도를 입력해주세요"); return;}
+      if(month==""){alert("월자를 입력해주세요"); return;}
+      if(date==""){alert("일자를 입력해주세요"); return;}
+
+
       var url = 'http://106.10.32.228:3000/editFinish/log_em'
       this.$http.get(url + `?ID=${this.log_id}&year=${this.year}&month=${this.month}&day=${this.day}`)
         .then(result => {
@@ -163,6 +181,11 @@ export default {
         })
     },
     editPay: function(){
+      var register = registerForm2.register.value;
+      var money = registerForm2.money.value;
+      if(money==""){alert("금액을 입력해주세요"); return;}
+      if(register==""){alert("접수번호를 입력해주세요"); return;}
+
       var url = 'http://106.10.32.228:3000/editPay/log_em'
       this.$http.put(url + `?val=${this.pay}&num=${this.log_id}`)
         .then(result => {
@@ -182,11 +205,12 @@ export default {
 
 <style media="screen">
 .log_em {
-  width: 95%;
-  padding-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
+    width: 100%;
+    padding-bottom: 20px;
+    padding-top: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    text-align: center;
 }
 #edit{
   width:50%;

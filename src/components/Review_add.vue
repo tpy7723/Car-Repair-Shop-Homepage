@@ -72,7 +72,9 @@ export default {
         .then((result) => {
           if (result.data.status == 'success') {
             console.log('success')
+            alert("등록 성공하였습니다")
             this.$router.push("review")
+
           } else {
             console.log('error')
             alert("후기는 한 번만 가능합니다!")
