@@ -72,11 +72,15 @@ export default {
                   this.$router.push("/")
               }
               else if(result.data.status == 'no-user'){
-                console.log('no-user in db')
+                console.log("no user")
                 alert('존재하지 않는 사용자입니다.')
+              }else if(result.data.status == 'incorrect'){
+                console.log("incorrect")
+                alert('비밀번호가 일치하지 않습니다')
               }
               else {
                 console.log('error')
+                alert('서버에러입니다.')
               }
             })
           .catch((error)=>{

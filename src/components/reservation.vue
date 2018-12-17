@@ -1,11 +1,13 @@
 <template>
   <div class="reservation">
-    예약게시판
+    <br><br>
+    <h1 italic> 예약게시판 </h1>
+    <br><br>
     <div class="board-box">
       <div class="row form-group">
         <div class="col-sm-10"></div>
         <div class="col-sm-2">
-          <button v-show="isLogged" type="button" class="btn btn-secondary" @click="createLog()">예약</button>
+          <button v-show="isLogged" type="button" class="btn btn-secondary" @click="createLog()">예약등록</button>
         </div>
       </div>
       <div v-if="sql_r==='success'" class="row">
@@ -81,8 +83,9 @@ export default {
             console.log(result)
             console.log(result.data.status)
             console.log(result.data.Msg)
-            if(result.data.Msg==='no-result'){
+            if(result.data.Msg==='noexist'){
                 console.log('no result')
+                alert("존재하지 않습니다");
                 this.sql_r='fail'
             }
             else{

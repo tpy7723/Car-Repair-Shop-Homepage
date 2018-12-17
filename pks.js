@@ -56,7 +56,7 @@ app.get('/login_em', function(req, res) {
 })
 });
 
-app.get('/', function(req, res) {
+app.post('/test', function(req, res) {
   res.send('Root');
 });
 
@@ -65,36 +65,40 @@ app.get('/login', function(req, res) {
   console.log('in login_em')
   console.log(req.query);
   var id = req.query.id,
-      password = req.query.password;
-  console.log('ID'+id+'  password'+password);
-//  res.send('hell0');
-//con.query('update Student SET token = ? WHERE studentId = ?', token, id, (err, result, fields)=>{
-  connection.query('SELECT * from 고객 WHERE ID=?',[id],(e,r,f)=>{
-  	if(e){
-  		console.log('error : \n'+e)
-  		res.send({
-  			status:'error',
-  			errMsg:'에러'
-  		})
-  	}
-  	else{
-      console.log(r[0].비밀번호)
-      if(r[0].비밀번호 == password ){
-        console.log('login pass')
+    password = req.query.password;
+  console.log('ID' + id + '  password' + password);
+
+  connection.query('SELECT * from 고객 WHERE ID=?', [id], (e, r, f) => {
+    if(r[0]){
+      if (e) {
+        console.log('error : \n' + e)
         res.send({
-          status: 'success',
-          result: JSON.parse(JSON.stringify(r)),
-          field: f
+          status: 'error',
+          errMsg: '에러'
         })
+      } else {
+        console.log(r[0].비밀번호)
+        if (r[0].비밀번호 == password) {
+          console.log('login pass')
+          res.send({
+            status: 'success',
+            result: JSON.parse(JSON.stringify(r)),
+            field: f
+          })
+        } else {
+          console.log('incorrect')
+          res.send({
+            status: "incorrect"
+          })
+        }
       }
-      else{
-        console.log('no user')
-        res.send({
-  				status: "no-user"
-  			})
-      }
-	}
-})
+    }else{
+      console.log('no-user')
+      res.send({
+        status: "no-user"
+	})
+    }
+  })
 });
 
 app.get('/request/join', function(req, res) {
@@ -136,6 +140,24 @@ app.get('/request/join_em', function(req, res) {
    console.log(PHONE);
    console.log(PASSWORD);
    console.log(SUPER);
+   if(SUPER==''){
+	   connection.query('insert into 직원 values (?,NULL,?,?,?,?)',[ID,NAME,PHONE,START,PASSWORD],(e,r,f) =>{
+	   console.log(connection.query);
+	 res.setHeader('Content-Type', 'text/plain');
+     if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      res.send({
+        status: 'success'
+      })
+   }
+  })
+
+   }else{
 
    connection.query('insert into 직원 values (?,?,?,?,?,?)',[ID,SUPER,NAME,PHONE,START,PASSWORD],(e,r,f) =>{
    console.log(connection.query);
@@ -152,6 +174,7 @@ app.get('/request/join_em', function(req, res) {
       })
    }
   })
+}
 });
 
 
@@ -610,6 +633,7 @@ app.get('/delete/quesiton', function(req, res) {
   })
 });
 
+
 app.get('/receipt', function(req, res) {
   console.log('in /receipt')
   console.log(req.query);
@@ -620,22 +644,66 @@ app.get('/receipt', function(req, res) {
   var newDate = new Date(); // 현재 시각 받아옴
   var time = newDate.toFormat('YYYY-MM-DD HH24:MI:SS');
 
-  connection.query('insert into 수리기록 (접수번호,접수시간,문제점,수리상태,수리시작날짜,직원번호,ID,차량번호) values (0,?,?,?,?,?,?,?)',[time,prob,'0','2018-12-17', em_id,id,num],(e,r,f) =>{
+  connection.query('select 사수_번호 from 직원 where 직원번호=?',[em_id],(e,r,f) =>{
      console.log(connection.query);
-     res.setHeader('Content-Type', 'text/plain');
      if (e) {
-      console.log(e)
-      res.send({
-        status: 'error',
-        errMsg: '에러',
-      })
-    } else {
-      res.send({
-        status: 'success'
-      })
-   }
-  })
+       console.log(e)
+       res.send({
+         status: 'error',
+         errMsg: '에러'
+       })
+     }else{
+       console.log(r)
+       console.log(r[0].사수_번호)
+       console.log('연결 성공')
+       if(r[0].사수_번호 == null ){
+         console.log('사수가 없습니다')
+         res.send({
+           status: '거절',
+           errMsg: '사수없음',
+         })
+       }else{
+         console.log('사수가 있습니다')
+
+         connection.query('insert into 수리기록 (접수번호,접수시간,문제점,수리상태,수리시작날짜,직원번호,ID,차량번호) values (0,?,?,?,?,?,?,?)',[time,prob,'0','2018-12-17', em_id,id,num],(e,r,f) =>{
+            console.log(connection.query);
+            res.setHeader('Content-Type', 'text/plain');
+            if (e) {
+             console.log(e)
+             res.send({
+               status: 'error',
+               errMsg: '에러',
+             })
+           } else {
+             console.log(id)
+             connection.query('SELECT 서비스이용횟수 FROM 고객 WHERE ID = ?',id,(e1,r1,f1) =>{
+                console.log(connection.query);
+                if(e1){
+                  console.log(e1)
+                }else{
+                  var serv_num = r1[0].서비스이용횟수
+                  serv_num *= 1;
+                  connection.query('UPDATE 고객 SET 서비스이용횟수 = ? WHERE ID = ?',[serv_num+1,id],(e2,r2,f2) =>{
+                     console.log(connection.query);
+                     if(e2){
+                       console.log(e2)
+                     }else{
+                       console.log('success')
+                       res.send({
+                         status: 'success'
+                       })
+                     }
+                   })
+                }
+              })
+          }
+         })
+
+       }
+     }
+   })
 });
+
 
 //검사안함.
 app.get('/create/car', function(req, res) {
@@ -730,7 +798,7 @@ app.get('/request/reservation', function(req, res) {
       })
   }else{
     console.log(loc)
-    connection.query('insert into 예약 (예약번호,희망날짜,픽업장소,ID,예약승인) values(0,?,?,?,?)',[0,date,loc,id,0],(e,r,f) =>{
+    connection.query('insert into 예약 (예약번호,희망날짜,픽업장소,ID,예약승인) values(0,?,?,?,?)',[date,loc,id,'0'],(e,r,f) =>{
        console.log(connection.query);
        res.setHeader('Content-Type', 'text/plain');
        if (e) {
