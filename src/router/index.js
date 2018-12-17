@@ -20,9 +20,10 @@ import Log_em from '@/components/Log_em'
 import Comment_add from '@/components/Comment_add'
 import Pluscomment from '@/components/Pluscomment'
 import Reserv_em from '@/components/Reserv_em'
+import Log_detail from '@/components/Log_detail'
+
 
 Vue.use(Router)
-
 
 export default new Router({
   routes: [
@@ -107,6 +108,10 @@ export default new Router({
       path:'/reserv_em',
       name:'Reserv_em',
       component: Reserv_em
+    },{
+      path:'/log_detail',
+      name:'Log_detail',
+      component: Log_detail
     }
   ]
 })

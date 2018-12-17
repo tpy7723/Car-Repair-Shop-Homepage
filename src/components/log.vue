@@ -97,7 +97,7 @@ export default {
     },
     detailLog: function(item){
       this.$router.push({
-        name: 'Review_add',
+        name: 'Log_detail',
         query: {
           num: item.접수번호
         }

@@ -1,7 +1,7 @@
 <template lang="html">
     <div class="">
       <br><br><br>
-      <h1>{num} 수리의 사용 부품</h1>
+      <h1>{{this.num}}번 수리의 사용 부품</h1>
       <table class="table table-striped">
         <thead>
           <tr class="text-center">
@@ -39,8 +39,9 @@ export default {
     this.getData()
   },
   methods: {
-    getData:functoin(){
+    getData:function(){
       var url = 'http://106.10.32.228:3000/detail/log'
+      console.log(this.$route.query.num)
       this.num = this.$route.query.num
       this.$http.get(url + `?ID=${this.num}`)
         .then(result => {
