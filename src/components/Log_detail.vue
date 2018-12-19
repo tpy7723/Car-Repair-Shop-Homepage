@@ -16,7 +16,7 @@
             <td>{{index+1}}</td>
             <td>{{item.모델번호}}</td>
             <td>{{item.부품명}}</td>
-            <td>{{item.시리얼번호}}</td>
+            <td>{{item.개수}}</td>
           </tr>
         </tbody>
       </table>

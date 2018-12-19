@@ -14,7 +14,7 @@ require('date-utils');
 // ADD THIS
 var cors = require('cors');
 app.use(cors());
-
+app.use(express.static('static'));
 
 
 const router = express.Router();
@@ -61,6 +61,7 @@ app.get('/login_em', function(req, res) {
 });
 
 app.get('/', function(req, res) {
+  res.render('./static/index');
   res.send('Root');
 });
 
@@ -454,7 +455,7 @@ app.get('/detail/log', function(req, res) {
    console.log('in detail/log')
    console.log(req.query);
    var ID = req.query.ID;
-   connection.query('SELECT 모델번호,부품명,시리얼번호 from 사용_부품 NATURAL JOIN 부품 WHERE 접수번호 = ?',[ID], (e, r, f) => {
+   connection.query('SELECT 모델번호,부품명,개수 from 사용_부품 NATURAL JOIN 부품 WHERE 접수번호 = ?',[ID], (e, r, f) => {
    res.setHeader('Content-Type', 'text/plain');
    if (e) {
       console.log(e)
