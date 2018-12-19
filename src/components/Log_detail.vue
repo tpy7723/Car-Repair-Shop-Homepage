@@ -8,7 +8,7 @@
             <th class="text-center">#</th>
             <th class="text-center">모델번호</th>
             <th class="text-center">부품명</th>
-            <th class="text-center">시리얼번호</th>
+            <th class="text-center">사용된 개수</th>
           </tr>
         </thead>
         <tbody>
