@@ -455,7 +455,7 @@ app.get('/detail/log', function(req, res) {
    console.log('in detail/log')
    console.log(req.query);
    var ID = req.query.ID;
-   connection.query('SELECT 모델번호,부품명,개수 from 사용_부품 NATURAL JOIN 부품 WHERE 접수번호 = ?',[ID], (e, r, f) => {
+   connection.query('SELECT 모델번호,부품명,개수,업체명 from 사용_부품 NATURAL JOIN 부품 NATURAL JOIN 부품_수급 NATURAL JOIN 부품업체 WHERE 접수번호 = ?',[ID], (e, r, f) => {
    res.setHeader('Content-Type', 'text/plain');
    if (e) {
       console.log(e)

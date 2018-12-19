@@ -9,6 +9,7 @@
             <th class="text-center">모델번호</th>
             <th class="text-center">부품명</th>
             <th class="text-center">사용된 개수</th>
+            <th class="text-center">공급업체명</th>
           </tr>
         </thead>
         <tbody>
@@ -17,6 +18,7 @@
             <td>{{item.모델번호}}</td>
             <td>{{item.부품명}}</td>
             <td>{{item.개수}}</td>
+            <td>{{item.업체명}}</td>
           </tr>
         </tbody>
       </table>
