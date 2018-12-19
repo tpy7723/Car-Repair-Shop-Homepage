@@ -24,41 +24,77 @@ app.get('/login_em', function(req, res) {
   console.log('in login_em')
   console.log(req.query);
   var id = req.query.id,
-      password = req.query.password;
-  console.log('ID'+id+'  password'+password);
-//  res.send('hell0');
-//con.query('update Student SET token = ? WHERE studentId = ?', token, id, (err, result, fields)=>{
-  connection.query('SELECT * from 직원 WHERE 직원번호=?',[id],(e,r,f)=>{
-  	if(e){
-  		console.log('error : \n'+e)
-  		res.send({
-  			status:'error',
-  			errMsg:'에러'
-  		})
-  	}
-  	else{
-      console.log(r[0].비밀번호)
-      if(r[0].비밀번호 == password ){
-        console.log('login pass')
+    password = req.query.password;
+  console.log('ID' + id + '  password' + password);
+
+  connection.query('SELECT * from 직원 WHERE 직원번호=?', [id], (e, r, f) => {
+    if (r[0]) {
+      if (e) {
+        console.log('error : \n' + e)
         res.send({
-          status: 'success',
-          result: JSON.parse(JSON.stringify(r)),
-          field: f
+          status: 'error',
+          errMsg: '에러'
         })
+      } else {
+        console.log(r[0].비밀번호)
+        if (r[0].비밀번호 == password) {
+          console.log('login pass')
+          res.send({
+            status: 'success',
+            result: JSON.parse(JSON.stringify(r)),
+            field: f
+          })
+        } else {
+          console.log('incorrect')
+          res.send({
+            status: "incorrect"
+          })
+        }
       }
-      else{
-        console.log('no user')
-        res.send({
-  				status: "no-user"
-  			})
-      }
-	}
-})
+    } else {
+      console.log('no-user')
+      res.send({
+        status: "no-user"
+      })
+    }
+  })
 });
 
-app.post('/test', function(req, res) {
+app.get('/', function(req, res) {
   res.send('Root');
 });
+
+app.get('/hello', function(req, res) {
+  console.log('in /hello')
+  ID=req.query.ID
+  connection.query('SELECT * from 고객 where ID=?',ID, (e, r, f) => {
+    res.setHeader('Content-Type', 'text/plain');
+    if(!r[0]){
+        console.log(e)
+        res.send({
+        status: '직원',
+        errMsg: '에러',
+      })
+
+    }else{
+    if (e) {
+      console.log(e)
+      res.send({
+        status: 'error',
+        errMsg: '에러',
+      })
+    } else {
+      res.send({
+        status: 'success',
+        result: JSON.parse(JSON.stringify(r)),
+        fields: f
+      })
+    }
+    }
+  })
+});
+
+
 
 app.get('/login', function(req, res) {
   res.setHeader('Content-Type', 'text/plain');
@@ -319,41 +355,36 @@ app.get('/call/reservation', function(req, res) {
   console.log(req.query);
   var id_reserv = req.query.ID
   console.log(id_reserv)
-  connection.query('SELECT EXISTS (SELECT * FROM 예약 WHERE ID = ?) AS flag',[id_reserv],(e, r, f) => {
-    res.setHeader('Content-Type', 'text/plain');
-    if (e) {
-      console.log('에러'+e)
-      res.send({
-        status: 'error',
-        errMsg: '에러'
-      })
-    } else {
-      if(r[0].flag==1){
-        connection.query('SELECT * FROM 예약 WHERE ID = ?',[id_reserv],(e, r, f) => {
-          if(r[0].ID != id_reserv){
+
+    connection.query('SELECT * FROM 예약 WHERE ID = ?', [id_reserv], (e, r, f) => {
+    console.log(connection.query)
+      if (e) {
+        console.log('에러'+e)
+        res.send({
+          status: 'error',
+          errMsg: '에러'
+        })
+      }else{
+      if (r[0]){
+	console.log(r[0].ID)
+        if (r[0].ID == id_reserv) {
             res.send({
               status:'success',
-              Msg:'no-result'
+	      result: JSON.parse(JSON.stringify(r)),
+
             })
           }
-          else{
-            res.send({
-              status: 'success',
-              result: JSON.parse(JSON.stringify(r)),
-              Msg: 'yes'
-            })
-          }
-        })
-        }
-        else{
+
+      }else {
           res.send({
-            status:'success',
-            Msg:'no-result'
+            status: 'noexist',
+            errMsg: '에러'
           })
         }
       }
-  })
+    })
 });
+
 
 app.get('/reserv_em', function(req, res) {
   console.log('in reserv_em')
@@ -501,6 +532,7 @@ app.get('/editState/log_em', function(req, res) {
     } else {
       if(r[0].수리상태=='0') var state ='1'
       else if(r[0].수리상태=='1') var state = '2'
+      else if(r[0].수리상태=='2') var state = '2'
       connection.query('update 수리기록 set 수리상태=? WHERE 접수번호 = ?',[state,id_log], (e2, r2, f) => {
       res.setHeader('Content-Type', 'text/plain');
       if (e2) {
@@ -782,7 +814,7 @@ app.get('/request/reservation', function(req, res) {
   var loc = req.query.loc;
   if(loc == ''){
     console.log(0)
-    connection.query('insert into 예약 (예약번호,희망날짜,ID,예약승인) values(0,?,?,?)',[0,date,id,'0'],(e,r,f) =>{
+    connection.query('insert into 예약 (예약번호,희망날짜,ID,예약승인) values(0,?,?,?)',[date,id,'0'],(e,r,f) =>{
        console.log(connection.query);
        res.setHeader('Content-Type', 'text/plain');
        if (e) {

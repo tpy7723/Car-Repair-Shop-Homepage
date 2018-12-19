@@ -4,7 +4,9 @@
       <div class = "main">
         <p><img src="./car.png" width="150px" height="150px" ><p/>
         <br>
-        <h3 style='color : red' v-show="isLogged">{{this.ID}}</h3>
+        <h1 v-show="!isLogged" style ="color : blue; font-weight:bold;">INHA CARCENTER<br/></h1>
+        <h2 v-show="!isLogged" > 방문해 주셔서 감사합니다.<br/></h2>
+        <h3 style='color : red;' v-show="isLogged">{{this.ID}}</h3>
         <br>
         <h3 v-show="isLogged && this.em == 0">{{this.list[0].이름}}님 안녕하세요~</h3>
         <br>
