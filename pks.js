@@ -812,40 +812,59 @@ app.get('/request/reservation', function(req, res) {
   var id = req.query.id;
   var date = req.query.date;
   var loc = req.query.loc;
-  if(loc == ''){
-    console.log(0)
-    connection.query('insert into 예약 (예약번호,희망날짜,ID,예약승인) values(0,?,?,?)',[date,id,'0'],(e,r,f) =>{
-       console.log(connection.query);
-       res.setHeader('Content-Type', 'text/plain');
-       if (e) {
-        console.log(e)
-        res.send({
-          status: 'error'
-        })
-      } else {
-        res.send({
-          status: 'success'
-        })
-       }
+  connection.query('select count(*) as ? from 예약 where 희망날짜 = ?',['개수',date],(e,r,f)=>{
+    if(e){
+      console.log(e)
+      res.send({
+        status:'error'
       })
-  }else{
-    console.log(loc)
-    connection.query('insert into 예약 (예약번호,희망날짜,픽업장소,ID,예약승인) values(0,?,?,?,?)',[date,loc,id,'0'],(e,r,f) =>{
-       console.log(connection.query);
-       res.setHeader('Content-Type', 'text/plain');
-       if (e) {
-        console.log(e)
+    }else{
+      if(r[0].개수 > 5){
         res.send({
-          status: 'error'
+          status:'success',
+          msg: '초과'
         })
-      } else {
-        res.send({
-          status: 'success'
-        })
-       }
-      })
-  }
-  console.log(loc)
+      }
+      else{
+        if(loc == ''){
+          connection.query('insert into 예약 (예약번호,희망날짜,ID,예약승인) values(0,?,?,?)',[date,id,'0'],(e,r,f) =>{
+             console.log(connection.query);
+             res.setHeader('Content-Type', 'text/plain');
+             if (e) {
+              console.log(e)
+              res.send({
+                status: 'error'
+              })
+            } else {
+              res.send({
+                status: 'success',
+                msg:''
+              })
+             }
+            })
+        }else{
+          console.log(loc)
+          connection.query('insert into 예약 (예약번호,희망날짜,픽업장소,ID,예약승인) values(0,?,?,?,?)',[date,loc,id,'0'],(e,r,f) =>{
+             console.log(connection.query);
+             res.setHeader('Content-Type', 'text/plain');
+             if (e) {
+              console.log(e)
+              res.send({
+                status: 'error'
+              })
+            } else {
+              res.send({
+                status: 'success',
+                msg:''
+              })
+             }
+            })
+            console.log(loc)
+        }
+      }
+    }
+  } )
+
 });
 
 app.get('/request/comment', function(req, res) { //게시글 등록
