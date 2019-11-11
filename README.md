@@ -25,6 +25,11 @@
            인하대학교 정보통신공학과 최유진  
            인하대학교 정보통신공학과 권정훈  
 
+![image](./설명1.png)    
+![image](./설명2.png)  
+![image](./설명3.png)  
+
+
 
 # project
 
@@ -43,6 +48,3 @@ npm run dev
 npm run build  
 
   
-![image](./설명1.png)    
-![image](./설명2.png)  
-![image](./설명3.png)  
